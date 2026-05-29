@@ -15,5 +15,5 @@ struct Level: Identifiable {
     let description: String
     let color: Color
     let icon: String
-    let lessonsCount: Int
+    let lessons: [Lesson]
 }
