@@ -49,7 +49,7 @@ struct LevelsView: View {
                     Image(systemName: "headphones")
                         .font(.system(size: 11))
                         .foregroundColor(level.color)
-                    Text("\(level.lessonsCount) уроков")
+                    Text("\(level.lessons.count) уроков")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(level.color)
                 }
@@ -76,8 +76,4 @@ struct LevelsView: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
     }
     
-}
-
-#Preview() {
-    LevelsView(level: Level.all[0])
 }

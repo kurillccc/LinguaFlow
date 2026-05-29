@@ -14,4 +14,6 @@ struct Lesson: Identifiable {
     let duration: String
     let isCompleted: Bool
     let isLocked: Bool
+    let audioFile: String
+    let text: String
 }

@@ -9,12 +9,21 @@ import SwiftUI
 
 struct LevelsTabView: View {
     
+    let levels: [Level] = [
+        LevelLoader.load(level: 1),
+        LevelLoader.load(level: 2),
+        LevelLoader.load(level: 3)
+    ].compactMap { $0 }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 16) {
-                    ForEach(Level.all) { level in
-                        LevelsView(level: level)
+                    ForEach(levels) { level in
+                        NavigationLink(destination: LessonsListView(level: level)) {
+                            LevelsView(level: level)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding(20)
@@ -22,5 +31,4 @@ struct LevelsTabView: View {
             .navigationTitle("Уроки")
         }
     }
-    
 }
