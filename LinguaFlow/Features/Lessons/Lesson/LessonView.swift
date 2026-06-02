@@ -88,10 +88,14 @@ struct LessonView: View {
  
                     Divider()
  
-                    Text((try? AttributedString(markdown: lesson.text)) ?? AttributedString(lesson.text))
-                        .font(.system(size: 16 * textScale))
-                        .foregroundColor(.primary.opacity(0.85))
-                        .lineSpacing(6)
+                    
+                    ForEach(lesson.text.components(separatedBy: "\n\n"), id: \.self) { paragraph in
+                        Text((try? AttributedString(markdown: paragraph)) ?? AttributedString(paragraph))
+                            .font(.system(size: 16 * textScale))
+                            .foregroundColor(.primary.opacity(0.85))
+                            .lineSpacing(4)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
                 .padding(20)
                 .padding(.bottom, 8)
