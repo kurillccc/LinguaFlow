@@ -43,7 +43,7 @@ struct LevelsView: View {
                 Text(level.description)
                     .font(.system(size: 13))
                     .foregroundColor(.secondary)
-                    .lineLimit(2)
+                    .lineLimit(4)
  
                 HStack(spacing: 4) {
                     Image(systemName: "headphones")
