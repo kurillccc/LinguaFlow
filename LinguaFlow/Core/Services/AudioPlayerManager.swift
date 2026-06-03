@@ -23,7 +23,11 @@ class AudioPlayerManager: ObservableObject {
     func load(lessonId: Int, levelId: Int, fileExtension: String = "mp3") {
         // Настройка аудио сессии
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setCategory(
+                .playback,
+                mode: .default,
+                options: []  // пустой options — значит фоновое воспроизведение включено
+            )
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("❌ AudioSession error: \(error)")

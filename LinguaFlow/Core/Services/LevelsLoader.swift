@@ -34,7 +34,7 @@ final class LevelLoader {
         
         return Level(
             id: dto.level,
-            title: "Level \(dto.level)",
+            title: "Уровень \(dto.level)",
             subtitle: subtitle(for: dto.level),
             description: description(for: dto.level),
             color: color(for: dto.level),
@@ -49,18 +49,18 @@ private extension LevelLoader {
     
     static func subtitle(for level: Int) -> String {
         switch level {
-        case 1: return "Beginner"
-        case 2: return "Intermediate"
-        case 3: return "Advanced"
+        case 1: return "А1"
+        case 2: return "А2"
+        case 3: return "B1"
         default: return "Unknown"
         }
     }
     
     static func description(for level: Int) -> String {
         switch level {
-        case 1: return "Основы языка, базовые фразы и приветствия"
-        case 2: return "Разговорные темы, грамматика и диалоги"
-        case 3: return "Сложные конструкции, акцент и беглость речи"
+        case 1: return "Постановка произношения и преодоление языкового барьера"
+        case 2: return "Развитие беглости речи и построение более длинных фраз"
+        case 3: return "Свободное бытовое общение без подсказок на русском языке"
         default: return ""
         }
     }
