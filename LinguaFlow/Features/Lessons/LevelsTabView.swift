@@ -31,4 +31,5 @@ struct LevelsTabView: View {
             .navigationTitle("Уроки")
         }
     }
+    
 }

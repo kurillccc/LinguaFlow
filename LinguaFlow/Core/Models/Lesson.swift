@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Lesson: Identifiable {
+struct Lesson: Identifiable, Hashable {
     let id: Int
     let levelId: Int
     let title: String
