@@ -17,10 +17,18 @@ struct LessonsListView: View {
         ScrollView {
             VStack(spacing: 0) {
                 ForEach(lessons) { lesson in
-                    NavigationLink(destination: LessonView(lesson: lesson, level: level)) {
-                        LessonRowView(lesson: lesson, accentColor: level.color)
+                    NavigationLink(
+                        destination: LessonPlayerScreen(
+                            level: level,
+                            lesson: lesson
+                        )
+                    ) {
+                        LessonRowView(
+                            lesson: lesson,
+                            accentColor: level.color
+                        )
                     }
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(.plain)
                     
                     Divider()
                         .padding(.leading, 76)
