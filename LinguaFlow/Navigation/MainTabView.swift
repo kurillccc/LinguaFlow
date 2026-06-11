@@ -16,16 +16,14 @@ struct MainTabView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             HomeView()
-                .tabItem {
-                    Label(Tab.home.title, systemImage: Tab.home.icon)
-                }
+                .tabItem { Label(Tab.home.title, systemImage: Tab.home.icon) }
                 .tag(Tab.home)
- 
+                .toolbarBackground(.visible, for: .tabBar)
+
             LevelsTabView()
-                .tabItem {
-                    Label(Tab.lessons.title, systemImage: Tab.lessons.icon)
-                }
+                .tabItem { Label(Tab.lessons.title, systemImage: Tab.lessons.icon) }
                 .tag(Tab.lessons)
+                .toolbarBackground(.visible, for: .tabBar)
  
 //            PracticeView()
 //                .tabItem {
@@ -40,10 +38,9 @@ struct MainTabView: View {
 //                .tag(Tab.progress)
             
             SettingsView()
-                .tabItem {
-                    Label(Tab.settings.title, systemImage: Tab.settings.icon)
-                }
+                .tabItem { Label(Tab.settings.title, systemImage: Tab.settings.icon) }
                 .tag(Tab.settings)
+                .toolbarBackground(.visible, for: .tabBar)
         }
         .tint(selectedTab.color)
         .preferredColorScheme(

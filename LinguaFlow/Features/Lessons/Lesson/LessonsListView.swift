@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LessonsListView: View {
     
     let level: Level
+    @State private var progressCache: [Int: LessonProgressEntity] = [:]
     
     var lessons: [Lesson] { level.lessons }
     
@@ -17,21 +19,18 @@ struct LessonsListView: View {
         ScrollView {
             VStack(spacing: 0) {
                 ForEach(lessons) { lesson in
-                    NavigationLink(
-                        destination: LessonPlayerScreen(
-                            level: level,
-                            lesson: lesson
-                        )
-                    ) {
+                    let progress = progressCache[lesson.id]
+                    
+                    NavigationLink(destination: LessonPlayerScreen(level: level, lesson: lesson)) {
                         LessonRowView(
                             lesson: lesson,
+                            progress: progress?.toModel(),
                             accentColor: level.color
                         )
                     }
                     .buttonStyle(.plain)
                     
-                    Divider()
-                        .padding(.leading, 76)
+                    Divider().padding(.leading, 76)
                 }
             }
             .background(Color(.systemBackground))
@@ -40,5 +39,9 @@ struct LessonsListView: View {
         }
         .navigationTitle(level.title)
         .background(Color(.systemGroupedBackground))
+        .onAppear {
+            progressCache = ProgressManager.shared.progressCache
+        }
     }
+    
 }

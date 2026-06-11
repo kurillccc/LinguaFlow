@@ -24,10 +24,17 @@ struct AudioPlayerView: View {
                     Slider(
                         value: Binding(
                             get: { audio.currentTime },
-                            set: { audio.seekTo($0) }
+                            set: { audio.scrubTo($0) }
                         ),
-                        in: 0...max(audio.duration, 1)
+                        in: 0...max(audio.duration, 1),
+                        onEditingChanged: { editing in
+                            if !editing && audio.isScrubbing {
+                                audio.commitSeek()
+                            }
+                            audio.isScrubbing = editing
+                        }
                     )
+                    .tint(level.color)
                     .tint(level.color)
  
                     HStack {
