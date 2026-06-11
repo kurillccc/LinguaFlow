@@ -10,7 +10,16 @@ import SwiftUI
 struct LessonRowView: View {
     
     let lesson: Lesson
+    let progress: LessonProgress?
     let accentColor: Color
+    
+    private var isCompleted: Bool {
+        progress?.isCompleted ?? false
+    }
+
+    private var isLocked: Bool {
+        false
+    }
 
     var body: some View {
         HStack(spacing: 16) {
@@ -18,17 +27,17 @@ struct LessonRowView: View {
             ZStack {
                 Circle()
                     .fill(
-                        lesson.isCompleted ? accentColor :
-                        lesson.isLocked ? Color(.systemGray5) :
+                        isCompleted ? accentColor :
+                        isLocked ? Color(.systemGray5) :
                         accentColor.opacity(0.12)
                     )
                     .frame(width: 44, height: 44)
 
-                if lesson.isCompleted {
+                if isCompleted {
                     Image(systemName: "checkmark")
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.white)
-                } else if lesson.isLocked {
+                } else if isLocked {
                     Image(systemName: "lock.fill")
                         .font(.system(size: 14))
                         .foregroundColor(Color(.systemGray3))
@@ -43,7 +52,7 @@ struct LessonRowView: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(lesson.title)
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(lesson.isLocked ? .secondary : .primary)
+                    .foregroundColor(isLocked ? .secondary : .primary)
 
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
@@ -57,15 +66,15 @@ struct LessonRowView: View {
 
             Spacer()
 
-            if !lesson.isLocked {
-                Image(systemName: lesson.isCompleted ? "arrow.clockwise.circle.fill" : "play.circle.fill")
+            if !isLocked {
+                Image(systemName: isCompleted ? "arrow.clockwise.circle.fill" : "play.circle.fill")
                     .font(.system(size: 28))
-                    .foregroundColor(lesson.isCompleted ? accentColor.opacity(0.6) : accentColor)
+                    .foregroundColor(isCompleted ? accentColor.opacity(0.6) : accentColor)
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .opacity(lesson.isLocked ? 0.6 : 1.0)
+        .opacity(isLocked ? 0.6 : 1.0)
     }
     
 }

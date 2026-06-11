@@ -12,8 +12,6 @@ struct Lesson: Identifiable, Hashable {
     let levelId: Int
     let title: String
     let duration: String
-    let isCompleted: Bool
-    let isLocked: Bool
     let audioFile: String
     let text: String
 }

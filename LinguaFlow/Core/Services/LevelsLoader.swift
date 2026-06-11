@@ -25,8 +25,6 @@ final class LevelLoader {
                 levelId: dto.level,
                 title: lessonDTO.title,
                 duration: lessonDTO.duration,
-                isCompleted: index < 2,
-                isLocked: index > 5,
                 audioFile: String(lessonDTO.id),
                 text: lessonDTO.text
             )
