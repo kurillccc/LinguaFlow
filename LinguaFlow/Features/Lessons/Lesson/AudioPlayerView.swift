@@ -105,7 +105,6 @@ struct AudioPlayerView: View {
                     }
                     .frame(maxWidth: .infinity)
  
-                    // Заглушка для симметрии (можно добавить кнопку избранного)
                     Button {
                         // TODO: закладка
                     } label: {

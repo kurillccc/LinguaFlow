@@ -55,7 +55,10 @@ struct LessonView: View {
     }
     
     private func loadProgress() {
-        let progress = ProgressManager.shared.load(lessonId: lesson.id)
+        let progress = ProgressManager.shared.load(
+            levelId: lesson.levelId,
+            lessonId: lesson.id
+        )
         lastPosition = progress?.lastPosition ?? 0
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

@@ -7,6 +7,7 @@
 
 struct LessonProgress {
     let lessonId: Int
-    var isCompleted: Bool
-    var lastPosition: Double
+    let levelId: Int
+    let isCompleted: Bool
+    let lastPosition: Double
 }
