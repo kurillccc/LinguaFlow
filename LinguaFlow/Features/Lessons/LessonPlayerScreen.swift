@@ -34,7 +34,7 @@ struct LessonPlayerScreen: View {
     }
     
     private func loadProgress() {
-        let progress = ProgressManager.shared.load(lessonId: currentLesson.id)
+        let progress = ProgressManager.shared.load(levelId: currentLesson.levelId,lessonId: currentLesson.id)
         lastPosition = progress?.lastPosition ?? 0
     }
     

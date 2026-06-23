@@ -12,6 +12,7 @@ extension LessonProgressEntity {
     func toModel() -> LessonProgress {
         LessonProgress(
             lessonId: Int(lessonId),
+            levelId: Int(levelId),
             isCompleted: isCompleted,
             lastPosition: lastPosition
         )

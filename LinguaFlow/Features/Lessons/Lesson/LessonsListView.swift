@@ -11,7 +11,7 @@ import Combine
 struct LessonsListView: View {
     
     let level: Level
-    @State private var progressCache: [Int: LessonProgressEntity] = [:]
+    @State private var progressCache: [String: LessonProgressEntity] = [:]
     
     var lessons: [Lesson] { level.lessons }
     
@@ -19,7 +19,7 @@ struct LessonsListView: View {
         ScrollView {
             VStack(spacing: 0) {
                 ForEach(lessons) { lesson in
-                    let progress = progressCache[lesson.id]
+                    let progress = progressCache["\(lesson.levelId)_\(lesson.id)"]
                     
                     NavigationLink(destination: LessonPlayerScreen(level: level, lesson: lesson)) {
                         LessonRowView(
