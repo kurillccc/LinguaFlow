@@ -22,10 +22,7 @@ struct LessonView: View {
     private var nextLessonComputed: Lesson? {
         guard let currentIndex = level.lessons.firstIndex(where: { $0.id == lesson.id }),
               currentIndex + 1 < level.lessons.count
-        else {
-            print("❌ next not found, currentIndex для id \(lesson.id): \(level.lessons.firstIndex(where: { $0.id == lesson.id }) ?? -1), всего уроков: \(level.lessons.count)")
-            return nil
-        }
+        else { return nil }
         print("✅ next lesson: \(level.lessons[currentIndex + 1].id)")
         return level.lessons[currentIndex + 1]
     }
