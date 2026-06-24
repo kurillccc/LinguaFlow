@@ -35,19 +35,12 @@ final class ProgressManager: ObservableObject {
             entity.levelId = Int64(levelId)
             entity.lastPosition = lastPosition
 
-            do {
-                try context.save()
+           try? context.save()
 
-                let key = "\(levelId)_\(lessonId)"
+            let key = "\(levelId)_\(lessonId)"
 
-                DispatchQueue.main.async {
-                    self.progressCache[key] = entity
-                }
-
-                print("💾 position saved:", lastPosition)
-
-            } catch {
-                print("❌ savePosition error:", error)
+            DispatchQueue.main.async {
+                self.progressCache[key] = entity
             }
         }
     }
@@ -60,10 +53,6 @@ final class ProgressManager: ObservableObject {
         guard let context else { return }
         let request = LessonProgressEntity.fetchRequest()
         let results = (try? context.fetch(request)) ?? []
-        print("📦 loadAll: найдено \(results.count) записей")
-        for r in results {
-            print("   lessonId: \(r.lessonId), lastPosition: \(r.lastPosition), isCompleted: \(r.isCompleted)")
-        }
         
         var cache: [String: LessonProgressEntity] = [:]
 
@@ -95,16 +84,11 @@ final class ProgressManager: ObservableObject {
             entity.isCompleted = isCompleted
             entity.lastPosition = lastPosition
             
-            do {
-                try context.save()
-                
-                let key = "\(levelId)_\(lessonId)"
-                DispatchQueue.main.async {
-                    self.progressCache[key] = entity
-                }
-                print("✅ saved lessonId:", lessonId, "isCompleted:", isCompleted)
-            } catch {
-                print("❌ save error:", error)
+            try? context.save()
+            
+            let key = "\(levelId)_\(lessonId)"
+            DispatchQueue.main.async {
+                self.progressCache[key] = entity
             }
         }
     }

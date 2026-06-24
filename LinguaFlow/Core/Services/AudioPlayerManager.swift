@@ -39,20 +39,15 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         
         let fileName = "\(lessonId)"
         guard let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
-            print("⚠️ Аудио файл не найден: \(fileName).\(fileExtension)")
             duration = 180
             return
         }
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.delegate = self
-            player?.enableRate = true
-            player?.prepareToPlay()
-            duration = player?.duration ?? 1
-            print("✅ Плеер создан, длительность: \(player?.duration ?? 0)")
-        } catch {
-            print("❌ AudioPlayer error: \(error)")
-        }
+        
+        player = try? AVAudioPlayer(contentsOf: url)
+        player?.delegate = self
+        player?.enableRate = true
+        player?.prepareToPlay()
+        duration = player?.duration ?? 1
     }
     
     func togglePlay() {
