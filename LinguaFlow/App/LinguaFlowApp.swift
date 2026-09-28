@@ -22,6 +22,9 @@ struct LinguaFlowApp: App {
                     ProgressManager.shared.setContext(
                         persistenceController.container.viewContext
                     )
+                    FlashcardStore.shared.setContext(
+                        persistenceController.container.viewContext
+                    )
                 }
         }
     }
