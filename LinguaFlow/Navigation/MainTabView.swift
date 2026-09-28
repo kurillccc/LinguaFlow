@@ -25,12 +25,13 @@ struct MainTabView: View {
                 .tag(Tab.lessons)
                 .toolbarBackground(.visible, for: .tabBar)
  
-//            PracticeView()
-//                .tabItem {
-//                    Label(Tab.practice.title, systemImage: Tab.practice.icon)
-//                }
-//                .tag(Tab.practice)
-// 
+            FlashcardsView()
+                .tabItem {
+                    Label(Tab.practice.title, systemImage: Tab.practice.icon)
+                }
+                .tag(Tab.practice)
+                .toolbarBackground(.visible, for: .tabBar)
+
 //            ProgressView()
 //                .tabItem {
 //                    Label(Tab.progress.title, systemImage: Tab.progress.icon)
