@@ -45,16 +45,6 @@ struct StreakShareView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
-                    if let jpeg, let preview {
-                        ShareLink(item: jpeg, preview: SharePreview("Мой стрик в LinguaFlow", image: Image(uiImage: preview))) {
-                            Label("Поделиться", systemImage: "square.and.arrow.up")
-                                .font(.headline)
-                                .padding(.horizontal, 24)
-                                .padding(.vertical, 8)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(Tab.home.color)
-                    }
                     if exportFailed {
                         Text("Не удалось подготовить изображение")
                             .font(.subheadline)
