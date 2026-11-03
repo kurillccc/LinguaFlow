@@ -38,10 +38,7 @@ struct MainTabView: View {
 //                }
 //                .tag(Tab.progress)
             
-            SettingsView()
-                .tabItem { Label(Tab.settings.title, systemImage: Tab.settings.icon) }
-                .tag(Tab.settings)
-                .toolbarBackground(.visible, for: .tabBar)
+
         }
         .tint(selectedTab.color)
         .preferredColorScheme(
