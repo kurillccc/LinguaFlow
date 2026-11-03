@@ -108,8 +108,14 @@ struct HomeView: View {
                     if cards.cards.isEmpty { showAddWord = true }
                     else { showStudy = true }
                 } label: {
-                    Label(cards.cards.isEmpty ? "Добавить слова" : "Повторить слова", systemImage: "arrow.right")
+                    Text(cards.cards.isEmpty ? "Добавить слова" : "Повторить слова")
+                        .padding(.horizontal, 28)
                         .frame(maxWidth: .infinity)
+                        .overlay(alignment: .trailing) {
+                            Image(systemName: "arrow.right")
+                                .padding(.trailing, 16)
+                                .accessibilityHidden(true)
+                        }
                         .padding(.vertical, 15)
                         .font(.headline)
                         .foregroundStyle(.white)
@@ -157,10 +163,12 @@ struct HomeView: View {
                     Text("Завершено уроков: \(completed) из \(target.level.lessons.count)")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    HStack {
-                        Text(progress.lastLessonId == 0 ? "Начать курс" : "Продолжить")
-                        Spacer()
+                    Text(progress.lastLessonId == 0 ? "Начать курс" : "Продолжить")
+                    .padding(.horizontal, 28)
+                    .frame(maxWidth: .infinity)
+                    .overlay(alignment: .trailing) {
                         Image(systemName: "play.fill")
+                            .accessibilityHidden(true)
                     }
                     .font(.headline)
                     .foregroundStyle(.white)
