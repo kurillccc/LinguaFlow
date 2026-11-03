@@ -38,22 +38,25 @@ struct AddFlashcardView: View {
                     TextField("Например: ¡Hola! ¿Cómo estás?", text: $example, axis: .vertical)
                         .lineLimit(2...4)
                 }
+                Section {
+                    Button {
+                        store.add(word: word, translation: translation, example: example.isEmpty ? nil : example)
+                        dismiss()
+                    } label: {
+                        Text("Сохранить")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 6)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(!canSave)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
             }
             .navigationTitle("Новая карточка")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Сохранить") {
-                        store.add(word: word, translation: translation, example: example.isEmpty ? nil : example)
-                        dismiss()
-                    }
-                    .fontWeight(.semibold)
-                    .disabled(!canSave)
-                }
-            }
+
         }
         .tint(accentColor)
     }
