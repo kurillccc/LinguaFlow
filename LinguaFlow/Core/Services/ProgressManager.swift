@@ -15,6 +15,16 @@ final class ProgressManager: ObservableObject {
     
     @Published private(set) var progressCache: [String: LessonProgressEntity] = [:]
     
+    @Published private(set) var lastLessonId = UserDefaults.standard.integer(forKey: "lastLessonId")
+    @Published private(set) var lastLevelId = UserDefaults.standard.integer(forKey: "lastLevelId")
+
+    func rememberLesson(lessonId: Int, levelId: Int) {
+        lastLessonId = lessonId
+        lastLevelId = levelId
+        UserDefaults.standard.set(lessonId, forKey: "lastLessonId")
+        UserDefaults.standard.set(levelId, forKey: "lastLevelId")
+    }
+
     private var context: NSManagedObjectContext?
     
     func savePosition(lessonId: Int, levelId: Int, lastPosition: Double) {

@@ -28,6 +28,7 @@ struct LessonView: View {
     }
     
     private func setupAudio() {
+        ProgressManager.shared.rememberLesson(lessonId: lesson.id, levelId: lesson.levelId)
         audio.onProgressUpdate = { time in
             ProgressManager.shared.savePosition(
                 lessonId: lesson.id,
@@ -69,7 +70,6 @@ struct LessonView: View {
             // MARK: — Navigation header
             HStack {
                 Button {
-                    audio.stop()
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
@@ -167,6 +167,11 @@ struct LessonView: View {
             loadProgress()
         }
         .onDisappear {
+            if audio.currentTime > 0 {
+                ProgressManager.shared.savePosition(
+                    lessonId: lesson.id, levelId: lesson.levelId, lastPosition: audio.currentTime
+                )
+            }
             audio.stop()
         }
     }

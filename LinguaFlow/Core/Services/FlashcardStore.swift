@@ -86,7 +86,13 @@ final class FlashcardStore: ObservableObject {
             entity.box = knew ? min(entity.box + 1, Int16(Flashcard.masteredBox)) : 0
             entity.lastReviewedAt = Date()
 
-            try? context.save()
+            do {
+                try context.save()
+                ReviewHistory.shared.recordReview()
+            } catch {
+                context.rollback()
+                return
+            }
             self.loadAll()
         }
     }
