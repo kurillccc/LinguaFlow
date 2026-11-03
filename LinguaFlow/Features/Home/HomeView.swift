@@ -45,8 +45,12 @@ struct HomeView: View {
             .toolbar(.hidden, for: .navigationBar)
             .sheet(isPresented: $showSettings) {
                 SettingsView()
+                    .presentationDragIndicator(.visible)
             }
-            .sheet(isPresented: $showAddWord) { AddFlashcardView() }
+            .sheet(isPresented: $showAddWord) {
+                AddFlashcardView()
+                    .presentationDragIndicator(.visible)
+            }
             .fullScreenCover(isPresented: $showStudy) {
                 FlashcardStudyView(cards: cards.cards)
             }

@@ -65,6 +65,7 @@ struct FlashcardsView: View {
             }
             .sheet(isPresented: $showAddSheet) {
                 AddFlashcardView()
+                    .presentationDragIndicator(.visible)
             }
             .fullScreenCover(isPresented: $showStudySheet) {
                 FlashcardStudyView(cards: store.cards)
