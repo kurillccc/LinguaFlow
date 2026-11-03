@@ -59,9 +59,9 @@ struct HomeView: View {
 
     private var reviewBanner: some View {
         TimelineView(.periodic(from: .now, by: 60)) { context in
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 2) {
                         Text("ПОВТОРЕНИЕ СЛОВ")
                             .font(.caption.weight(.bold))
                             .foregroundStyle(.secondary)
