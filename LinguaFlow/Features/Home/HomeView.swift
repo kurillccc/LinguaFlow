@@ -128,7 +128,7 @@ struct HomeView: View {
                                 .accessibilityHidden(true)
                         }
                         .padding(.vertical, 12)
-                        .font(.footnote.weight(.semibold))
+                        .font(.subheadline.weight(.semibold))
                         .foregroundStyle(.white)
                         .background(Tab.home.color, in: Capsule())
                 }
