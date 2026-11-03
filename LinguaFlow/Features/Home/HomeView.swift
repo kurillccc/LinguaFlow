@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showSettings = false
+    @State private var showStreakShare = false
 
     @State private var showStudy = false
     @State private var showAddWord = false
@@ -50,6 +51,9 @@ struct HomeView: View {
             }
             .background(Tab.home.color.opacity(0.09).ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
+            .fullScreenCover(isPresented: $showStreakShare) {
+                StreakShareView(streak: history.streak())
+            }
             .sheet(isPresented: $showSettings) {
                 SettingsView()
                     .presentationDragIndicator(.visible)
@@ -193,7 +197,9 @@ struct HomeView: View {
     private var header: some View {
         TimelineView(.periodic(from: .now, by: 60)) { context in
             HStack(spacing: 8) {
-                ShareLink(item: shareMessage(at: context.date)) {
+                Button {
+                    showStreakShare = true
+                } label: {
                     Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 18, weight: .medium))
                         .frame(width: 44, height: 44)
@@ -218,21 +224,6 @@ struct HomeView: View {
             }
             .foregroundStyle(.primary)
         }
-    }
-
-    private func shareMessage(at date: Date) -> String {
-        let streak = history.streak(at: date)
-        guard streak > 0 else {
-            return "Начинаю свою серию повторения слов в LinguaFlow! 💪 Кто со мной?"
-        }
-        let days: String
-        switch (streak % 100, streak % 10) {
-        case (11...14, _): days = "дней"
-        case (_, 1): days = "день"
-        case (_, 2...4): days = "дня"
-        default: days = "дней"
-        }
-        return "🔥 Я повторяю слова уже \(streak) \(days) подряд в LinguaFlow! Прокачиваю английский каждый день 💪 Попробуй побить мой стрик!"
     }
 
     private func greeting(at date: Date) -> String {

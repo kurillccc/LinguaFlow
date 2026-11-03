@@ -45,7 +45,7 @@ struct AddFlashcardView: View {
                     } label: {
                         Text("Сохранить")
                             .font(.headline)
-                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                     }
                     .buttonStyle(.borderedProminent)
