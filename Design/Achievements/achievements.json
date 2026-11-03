@@ -1,0 +1,176 @@
+[
+  {
+    "id": "first-lesson",
+    "name": "Первый шаг",
+    "condition": "Завершить первый урок.",
+    "category": "lessons",
+    "threshold": 1,
+    "icon": "icons/first-lesson.png"
+  },
+  {
+    "id": "level-complete",
+    "name": "Новый уровень",
+    "condition": "Завершить все уроки любого одного уровня.",
+    "category": "lessons",
+    "icon": "icons/level-complete.png"
+  },
+  {
+    "id": "first-10-words",
+    "name": "Мой словарь",
+    "condition": "Добавить 10 слов в словарь.",
+    "category": "vocabulary",
+    "threshold": 10,
+    "icon": "icons/first-10-words.png"
+  },
+  {
+    "id": "100-mastered-words",
+    "name": "Словарный запас",
+    "condition": "Довести 100 карточек до статуса «выучено».",
+    "category": "mastery",
+    "threshold": 100,
+    "icon": "icons/100-mastered-words.png"
+  },
+  {
+    "id": "streak-3",
+    "name": "Искра",
+    "condition": "Повторять слова 3 дня подряд.",
+    "category": "streak",
+    "threshold": 3,
+    "icon": "icons/streak-3.png"
+  },
+  {
+    "id": "streak-7",
+    "name": "Неделя в ритме",
+    "condition": "Повторять слова 7 дней подряд.",
+    "category": "streak",
+    "threshold": 7,
+    "icon": "icons/streak-7.png"
+  },
+  {
+    "id": "streak-30",
+    "name": "Сила привычки",
+    "condition": "Повторять слова 30 дней подряд.",
+    "category": "streak",
+    "threshold": 30,
+    "icon": "icons/streak-30.png"
+  },
+  {
+    "id": "streak-100",
+    "name": "Несгораемый",
+    "condition": "Повторять слова 100 дней подряд.",
+    "category": "streak",
+    "threshold": 100,
+    "icon": "icons/streak-100.png"
+  },
+  {
+    "id": "level-2-complete",
+    "name": "Набираю высоту",
+    "condition": "Завершить все уроки уровня 2.",
+    "category": "lessons",
+    "levelId": 2,
+    "icon": "icons/level-2-complete.png"
+  },
+  {
+    "id": "level-3-complete",
+    "name": "Высшая ступень",
+    "condition": "Завершить все уроки уровня 3.",
+    "category": "lessons",
+    "levelId": 3,
+    "icon": "icons/level-3-complete.png"
+  },
+  {
+    "id": "all-lessons-complete",
+    "name": "Курс пройден",
+    "condition": "Завершить все 90 уроков трёх уровней.",
+    "category": "lessons",
+    "icon": "icons/all-lessons-complete.png"
+  },
+  {
+    "id": "first-word",
+    "name": "Первое слово",
+    "condition": "Добавить первое слово в словарь.",
+    "category": "vocabulary",
+    "threshold": 1,
+    "icon": "icons/first-word.png"
+  },
+  {
+    "id": "words-25",
+    "name": "Слова в копилке",
+    "condition": "Добавить 25 слов в словарь.",
+    "category": "vocabulary",
+    "threshold": 25,
+    "icon": "icons/words-25.png"
+  },
+  {
+    "id": "words-60",
+    "name": "Коллекционер слов",
+    "condition": "Добавить 60 слов в словарь.",
+    "category": "vocabulary",
+    "threshold": 60,
+    "icon": "icons/words-60.png"
+  },
+  {
+    "id": "words-100",
+    "name": "Сотня в запасе",
+    "condition": "Добавить 100 слов в словарь.",
+    "category": "vocabulary",
+    "threshold": 100,
+    "icon": "icons/words-100.png"
+  },
+  {
+    "id": "words-500",
+    "name": "Живая библиотека",
+    "condition": "Добавить 500 слов в словарь.",
+    "category": "vocabulary",
+    "threshold": 500,
+    "icon": "icons/words-500.png"
+  },
+  {
+    "id": "words-1000",
+    "name": "Тысяча возможностей",
+    "condition": "Добавить 1000 слов в словарь.",
+    "category": "vocabulary",
+    "threshold": 1000,
+    "icon": "icons/words-1000.png"
+  },
+  {
+    "id": "streak-1",
+    "name": "Сегодня начинаю",
+    "condition": "Повторять слова 1 день.",
+    "category": "streak",
+    "threshold": 1,
+    "icon": "icons/streak-1.png"
+  },
+  {
+    "id": "streak-14",
+    "name": "Две недели огня",
+    "condition": "Повторять слова 14 дней подряд.",
+    "category": "streak",
+    "threshold": 14,
+    "icon": "icons/streak-14.png"
+  },
+  {
+    "id": "streak-60",
+    "name": "Уверенный ритм",
+    "condition": "Повторять слова 60 дней подряд.",
+    "category": "streak",
+    "threshold": 60,
+    "icon": "icons/streak-60.png"
+  },
+  {
+    "id": "streak-180",
+    "name": "Полгода в потоке",
+    "condition": "Повторять слова 180 дней подряд.",
+    "category": "streak",
+    "threshold": 180,
+    "icon": "icons/streak-180.png"
+  },
+  {
+    "id": "streak-365",
+    "name": "Год без пауз",
+    "condition": "Повторять слова 365 дней подряд.",
+    "category": "streak",
+    "threshold": 365,
+    "icon": "icons/streak-365.png"
+  }
+]
