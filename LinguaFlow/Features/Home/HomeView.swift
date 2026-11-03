@@ -32,14 +32,21 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 24) {
-                    header
+                VStack(spacing: 14) {
                     reviewBanner
                     courseBanner
                 }
-                .padding(20)
+                .padding(.horizontal, 16)
+                .padding(.top, 4)
+                .padding(.bottom, 16)
                 .frame(maxWidth: 640)
                 .frame(maxWidth: .infinity)
+            }
+            .safeAreaInset(edge: .top, spacing: 0) {
+                header
+                    .padding(.horizontal, 16)
+                    .padding(.top, 2)
+                    .padding(.bottom, 8)
             }
             .background(Tab.home.color.opacity(0.09).ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
@@ -66,17 +73,17 @@ struct HomeView: View {
                             .font(.caption.weight(.bold))
                             .foregroundStyle(.secondary)
                         Text("\(history.streak(at: context.date))")
-                            .font(.system(size: 64, weight: .bold, design: .rounded))
+                            .font(.system(size: 48, weight: .bold, design: .rounded))
                         Text("дней подряд")
-                            .font(.title3.bold())
+                            .font(.headline)
                             .foregroundStyle(Tab.home.color)
                     }
                     Spacer()
                     Image(systemName: "flame.fill")
-                        .font(.system(size: 66))
+                        .font(.system(size: 48))
                         .foregroundStyle(.orange.gradient)
                         .rotationEffect(.degrees(10))
-                        .padding(.top, 24)
+                        .padding(.top, 16)
                         .accessibilityHidden(true)
                 }
                 Text(cards.cards.isEmpty
@@ -84,17 +91,17 @@ struct HomeView: View {
                      : history.reviewed(on: context.date)
                         ? "Сегодня вы уже повторяли слова. Так держать!"
                         : "Несколько минут практики — ещё один день в серии")
-                    .font(.subheadline)
+                    .font(.footnote)
                     .foregroundStyle(.secondary)
                 HStack(spacing: 6) {
                     ForEach(0..<7) { offset in
                         let day = Calendar.current.date(byAdding: .day, value: offset - 6, to: context.date)!
                         let done = history.reviewed(on: day)
-                        VStack(spacing: 10) {
+                        VStack(spacing: 6) {
                             Text(day.formatted(.dateTime.weekday(.abbreviated).locale(Locale(identifier: "ru_RU"))))
                                 .font(.caption2.weight(.medium))
                             Image(systemName: done ? "checkmark.circle.fill" : "circle.fill")
-                                .font(.title3)
+                                .font(.body)
                                 .foregroundStyle(done ? Tab.home.color : Color.secondary.opacity(0.15))
                         }
                         .frame(maxWidth: .infinity)
@@ -102,7 +109,7 @@ struct HomeView: View {
                         .accessibilityLabel("\(day.formatted(date: .abbreviated, time: .omitted)): \(done ? "слова повторены" : "нет повторений")")
                     }
                 }
-                .padding(14)
+                .padding(10)
                 .background(Color(.systemBackground).opacity(0.7), in: RoundedRectangle(cornerRadius: 20))
                 Button {
                     if cards.cards.isEmpty { showAddWord = true }
@@ -116,13 +123,13 @@ struct HomeView: View {
                                 .padding(.trailing, 16)
                                 .accessibilityHidden(true)
                         }
-                        .padding(.vertical, 15)
-                        .font(.headline)
+                        .padding(.vertical, 12)
+                        .font(.footnote.weight(.semibold))
                         .foregroundStyle(.white)
                         .background(Tab.home.color, in: Capsule())
                 }
             }
-            .padding(24)
+            .padding(18)
             .background {
                 RoundedRectangle(cornerRadius: 28)
                     .fill(Color(.secondarySystemGroupedBackground))
@@ -141,23 +148,23 @@ struct HomeView: View {
             NavigationLink {
                 LessonPlayerScreen(level: target.level, lesson: target.lesson)
             } label: {
-                VStack(alignment: .leading, spacing: 18) {
+                VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("ВАШ КУРС")
                             .font(.caption.weight(.bold))
                             .foregroundStyle(.secondary)
                         Spacer()
                         Image(systemName: "headphones")
-                            .font(.system(size: 34))
+                            .font(.system(size: 26))
                             .foregroundStyle(Tab.lessons.color)
                     }
                     Text(progress.lastLessonId == 0 ? "Начнём учиться?" : "Продолжим обучение")
-                        .font(.system(.title2, design: .rounded, weight: .bold))
+                        .font(.system(.title3, design: .rounded, weight: .bold))
                     Text("\(target.level.title) · Урок \(target.lesson.id)")
-                        .font(.subheadline.weight(.semibold))
+                        .font(.footnote.weight(.semibold))
                         .foregroundStyle(Tab.lessons.color)
                     Text(target.lesson.title)
-                        .font(.subheadline)
+                        .font(.footnote)
                     ProgressView(value: Double(completed), total: Double(max(target.level.lessons.count, 1)))
                         .tint(Tab.lessons.color)
                     Text("Завершено уроков: \(completed) из \(target.level.lessons.count)")
@@ -170,12 +177,12 @@ struct HomeView: View {
                         Image(systemName: "play.fill")
                             .accessibilityHidden(true)
                     }
-                    .font(.headline)
+                    .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.white)
-                    .padding(16)
+                    .padding(12)
                     .background(Tab.lessons.color, in: Capsule())
                 }
-                .padding(24)
+                .padding(18)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 28))
             }
@@ -188,14 +195,14 @@ struct HomeView: View {
             HStack(spacing: 8) {
                 ShareLink(item: shareMessage(at: context.date)) {
                     Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 21, weight: .medium))
-                        .frame(width: 48, height: 48)
+                        .font(.system(size: 18, weight: .medium))
+                        .frame(width: 44, height: 44)
                         .background(Color(.systemBackground), in: Circle())
                 }
                 .accessibilityLabel("Поделиться стриком повторения слов")
 
                 Text(greeting(at: context.date))
-                    .font(.system(.title2, design: .rounded, weight: .bold))
+                    .font(.system(.title3, design: .rounded, weight: .bold))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
 
@@ -203,15 +210,14 @@ struct HomeView: View {
                     showSettings = true
                 } label: {
                     Image(systemName: "gearshape")
-                        .font(.system(size: 23, weight: .medium))
-                        .frame(width: 48, height: 48)
+                        .font(.system(size: 19, weight: .medium))
+                        .frame(width: 44, height: 44)
                         .background(Color(.systemBackground), in: Circle())
                 }
                 .accessibilityLabel("Настройки")
             }
             .foregroundStyle(.primary)
         }
-        .padding(.vertical, 8)
     }
 
     private func shareMessage(at date: Date) -> String {
