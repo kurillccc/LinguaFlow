@@ -231,25 +231,32 @@ private struct AchievementTile: View {
     let achievement: AchievementState
 
     var body: some View {
-        VStack(spacing: 10) {
-            AchievementBadge(achievement: achievement, size: 76)
+        VStack(spacing: 6) {
+            AchievementBadge(achievement: achievement, size: 56)
             Text(achievement.definition.name)
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .frame(height: 36)
             Text(achievement.definition.condition)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
+                .lineLimit(4)
+                .minimumScaleFactor(0.8)
+                .frame(maxWidth: .infinity)
+                .frame(height: 52)
             ProgressView(value: achievement.fraction)
                 .tint(Tab.home.color)
             Text(achievement.isEarned ? "Получено" : achievement.progressText)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(achievement.isEarned ? Tab.home.color : Color.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
         }
-        .padding(14)
-        .frame(width: 144)
+        .padding(8)
+        .frame(width: 144, height: 202)
         .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
         .accessibilityElement(children: .combine)
     }

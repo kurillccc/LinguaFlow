@@ -84,16 +84,9 @@ struct LessonView: View {
                 Spacer()
 
                 VStack(spacing: 2) {
-                    HStack(spacing: 5) {
-                        Image("Level\(level.id)Illustration")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 26, height: 26)
-                            .accessibilityHidden(true)
-                        Text(level.title)
-                            .font(.system(size: 12))
-                            .foregroundColor(.secondary)
-                    }
+                    Text(level.title)
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
                     Text("Урок \(lesson.id)")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
                 }
