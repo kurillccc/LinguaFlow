@@ -232,25 +232,25 @@ private struct AchievementTile: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            AchievementBadge(achievement: achievement, size: 96)
+            AchievementBadge(achievement: achievement, size: 76)
             Text(achievement.definition.name)
-                .font(.system(.headline, design: .rounded, weight: .semibold))
+                .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 .multilineTextAlignment(.center)
-                .frame(minHeight: 42)
+                .frame(minHeight: 38)
             Text(achievement.definition.condition)
-                .font(.subheadline)
+                .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-                .frame(minHeight: 62)
+                .frame(minHeight: 50)
             ProgressView(value: achievement.fraction)
                 .tint(Tab.home.color)
             Text(achievement.isEarned ? "Получено" : achievement.progressText)
-                .font(.footnote.weight(.semibold))
+                .font(.caption.weight(.semibold))
                 .foregroundStyle(achievement.isEarned ? Tab.home.color : Color.secondary)
         }
         .padding(14)
-        .frame(width: 168)
-        .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20))
+        .frame(width: 144)
+        .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
         .accessibilityElement(children: .combine)
     }
 }

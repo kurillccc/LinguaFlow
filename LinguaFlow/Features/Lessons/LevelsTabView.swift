@@ -37,6 +37,7 @@ struct LevelsTabView: View {
                     .background(Color(.systemGroupedBackground))
             }
         }
+        .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
     
 }

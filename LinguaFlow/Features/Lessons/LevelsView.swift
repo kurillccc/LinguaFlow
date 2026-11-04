@@ -8,29 +8,32 @@
 import SwiftUI
 
 struct LevelsView: View {
-    
+
     let level: Level
     @State private var isPressed = false
- 
+
     var body: some View {
         HStack(spacing: 20) {
-            // Icon
+            // Level artwork
             ZStack {
                 Circle()
                     .fill(level.color.opacity(0.15))
-                    .frame(width: 64, height: 64)
- 
-                Text(level.icon)
-                    .font(.system(size: 30))
+                    .frame(width: 68, height: 68)
+
+                Image("Level\(level.id)Illustration")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 76, height: 76)
+                    .accessibilityHidden(true)
             }
- 
+
             // Text info
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text(level.title)
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
- 
+
                     Text(level.subtitle)
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(level.color)
@@ -39,12 +42,12 @@ struct LevelsView: View {
                         .background(level.color.opacity(0.12))
                         .clipShape(Capsule())
                 }
- 
+
                 Text(level.description)
                     .font(.system(size: 13))
                     .foregroundColor(.secondary)
                     .lineLimit(4)
- 
+
                 HStack(spacing: 4) {
                     Image(systemName: "headphones")
                         .font(.system(size: 11))
@@ -55,9 +58,9 @@ struct LevelsView: View {
                 }
                 .padding(.top, 2)
             }
- 
+
             Spacer()
- 
+
             Image(systemName: "chevron.right")
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundColor(.secondary.opacity(0.5))
@@ -75,5 +78,5 @@ struct LevelsView: View {
         .scaleEffect(isPressed ? 0.97 : 1.0)
         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
     }
-    
+
 }
