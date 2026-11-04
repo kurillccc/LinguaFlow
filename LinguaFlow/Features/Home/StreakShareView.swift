@@ -57,11 +57,13 @@ struct StreakShareView: View {
                 .frame(maxWidth: .infinity)
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Мой стрик")
-            .navigationBarTitleDisplayMode(.inline)
+            .appScreenTitle("Мой стрик")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Закрыть", systemImage: "xmark") { dismiss() }
+                    Button { dismiss() } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .accessibilityLabel("Закрыть")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     if let jpeg, let preview {

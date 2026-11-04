@@ -14,6 +14,7 @@ struct LessonView: View {
     
     @StateObject private var audio = AudioPlayerManager()
     @Environment(\.dismiss) private var dismiss
+    @State private var achievementBlockerID = UUID()
     @State private var textScale: CGFloat = 1.0
     @State private var lastPosition: Double = 0
     
@@ -156,6 +157,7 @@ struct LessonView: View {
         .background(Color(.systemGroupedBackground))
         .navigationBarHidden(true)
         .onAppear {
+            AchievementStore.shared.activeLessonIDs.insert(achievementBlockerID)
             audio.load(lessonId: lesson.id, levelId: lesson.levelId)
             setupAudio()
             loadProgress()
@@ -167,6 +169,7 @@ struct LessonView: View {
             loadProgress()
         }
         .onDisappear {
+            AchievementStore.shared.activeLessonIDs.remove(achievementBlockerID)
             if audio.currentTime > 0 {
                 ProgressManager.shared.savePosition(
                     lessonId: lesson.id, levelId: lesson.levelId, lastPosition: audio.currentTime

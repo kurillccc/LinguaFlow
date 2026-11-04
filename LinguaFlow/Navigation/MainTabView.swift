@@ -20,6 +20,11 @@ struct MainTabView: View {
                 .tag(Tab.home)
                 .toolbarBackground(.visible, for: .tabBar)
 
+            AchievementsView()
+                .tabItem { Label(Tab.achievements.title, systemImage: Tab.achievements.icon) }
+                .tag(Tab.achievements)
+                .toolbarBackground(.visible, for: .tabBar)
+
             LevelsTabView()
                 .tabItem { Label(Tab.lessons.title, systemImage: Tab.lessons.icon) }
                 .tag(Tab.lessons)
@@ -32,14 +37,10 @@ struct MainTabView: View {
                 .tag(Tab.practice)
                 .toolbarBackground(.visible, for: .tabBar)
 
-//            ProgressView()
-//                .tabItem {
-//                    Label(Tab.progress.title, systemImage: Tab.progress.icon)
-//                }
-//                .tag(Tab.progress)
-            
 
         }
+        .background(KeyboardDismissInstaller().frame(width: 0, height: 0))
+        .background(AchievementPresenter().frame(width: 0, height: 0))
         .tint(selectedTab.color)
         .preferredColorScheme(
             selectedTheme == "light" ? .light :

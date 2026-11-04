@@ -31,7 +31,9 @@ final class FlashcardStore: ObservableObject {
         let results = (try? context.fetch(request)) ?? []
 
         DispatchQueue.main.async {
-            self.cards = results.map { $0.toModel() }
+            let cards = results.map { $0.toModel() }
+            VocabularyHistory.shared.seed(from: cards)
+            self.cards = cards
         }
     }
 
@@ -52,8 +54,13 @@ final class FlashcardStore: ObservableObject {
             entity.createdAt = Date()
             entity.box = 0
 
-            try? context.save()
-            self.loadAll()
+            do {
+                try context.save()
+                VocabularyHistory.shared.record(word: trimmedWord)
+                self.loadAll()
+            } catch {
+                context.rollback()
+            }
         }
     }
 
@@ -89,6 +96,10 @@ final class FlashcardStore: ObservableObject {
             do {
                 try context.save()
                 ReviewHistory.shared.recordReview()
+                VocabularyHistory.shared.record(
+                    word: card.word,
+                    masteredID: entity.box >= Int16(Flashcard.masteredBox) ? card.id : nil
+                )
             } catch {
                 context.rollback()
                 return

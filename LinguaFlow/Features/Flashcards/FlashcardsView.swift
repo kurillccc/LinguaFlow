@@ -52,15 +52,16 @@ struct FlashcardsView: View {
                     }
                 }
             }
-            .navigationTitle("Карточки")
+            .appScreenTitle("Карточки")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showAddSheet = true
                     } label: {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 20))
+                            .font(.system(size: 18))
                     }
+                    .accessibilityLabel("Добавить слово")
                 }
             }
             .sheet(isPresented: $showAddSheet) {

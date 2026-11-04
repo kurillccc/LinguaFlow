@@ -37,7 +37,8 @@ struct LessonsListView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(16)
         }
-        .navigationTitle(level.title)
+        .appScreenTitle(level.title)
+        .appBackButton()
         .background(Color(.systemGroupedBackground))
         .onAppear {
             progressCache = ProgressManager.shared.progressCache

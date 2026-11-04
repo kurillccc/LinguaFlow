@@ -19,6 +19,7 @@ struct LinguaFlowApp: App {
                 .environment(\.managedObjectContext,
                               persistenceController.container.viewContext)
                 .onAppear {
+                    _ = AchievementStore.shared
                     ProgressManager.shared.setContext(
                         persistenceController.container.viewContext
                     )

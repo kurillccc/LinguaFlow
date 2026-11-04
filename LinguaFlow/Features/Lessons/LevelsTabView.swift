@@ -26,9 +26,9 @@ struct LevelsTabView: View {
                         .buttonStyle(PlainButtonStyle())
                     }
                 }
-                .padding(20)
+                .padding(16)
             }
-            .navigationTitle("Уроки")
+            .appScreenTitle("Уроки")
         }
     }
     

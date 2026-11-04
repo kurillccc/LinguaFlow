@@ -36,11 +36,13 @@ struct FlashcardStudyView: View {
                     completionState
                 }
             }
-            .navigationTitle("Изучение")
-            .navigationBarTitleDisplayMode(.inline)
+            .appScreenTitle("Изучение")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Закрыть") { dismiss() }
+                    Button { dismiss() } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .accessibilityLabel("Закрыть")
                 }
             }
         }

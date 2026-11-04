@@ -46,17 +46,15 @@ struct HomeView: View {
             .safeAreaInset(edge: .top, spacing: 0) {
                 header
                     .padding(.horizontal, 16)
-                    .padding(.top, 2)
-                    .padding(.bottom, 8)
+                    .padding(.bottom, 6)
             }
             .background(Tab.home.color.opacity(0.09).ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
             .fullScreenCover(isPresented: $showStreakShare) {
                 StreakShareView(streak: history.streak())
             }
-            .sheet(isPresented: $showSettings) {
+            .navigationDestination(isPresented: $showSettings) {
                 SettingsView()
-                    .presentationDragIndicator(.visible)
             }
             .sheet(isPresented: $showAddWord) {
                 AddFlashcardView()
@@ -104,9 +102,16 @@ struct HomeView: View {
                         VStack(spacing: 6) {
                             Text(day.formatted(.dateTime.weekday(.abbreviated).locale(Locale(identifier: "ru_RU"))))
                                 .font(.caption2.weight(.medium))
-                            Image(systemName: done ? "checkmark.circle.fill" : "circle.fill")
-                                .font(.body)
-                                .foregroundStyle(done ? Tab.home.color : Color.secondary.opacity(0.15))
+                            Group {
+                                if done {
+                                    Image(systemName: "flame.fill")
+                                        .foregroundStyle(.orange.gradient)
+                                } else {
+                                    Image(systemName: "circle.fill")
+                                        .foregroundStyle(Color.secondary.opacity(0.15))
+                                }
+                            }
+                            .font(.body)
                         }
                         .frame(maxWidth: .infinity)
                         .accessibilityElement(children: .ignore)
@@ -201,14 +206,16 @@ struct HomeView: View {
                     showStreakShare = true
                 } label: {
                     Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 18, weight: .medium))
-                        .frame(width: 44, height: 44)
+                        .font(.system(size: 16, weight: .medium))
+                        .frame(width: 34, height: 34)
                         .background(Color(.systemBackground), in: Circle())
+                        .frame(width: 44, height: 44)
                 }
                 .accessibilityLabel("Поделиться стриком повторения слов")
 
                 Text(greeting(at: context.date))
-                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .accessibilityIdentifier("home-greeting")
+                    .font(.system(.headline, design: .rounded, weight: .bold))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
 
@@ -216,9 +223,10 @@ struct HomeView: View {
                     showSettings = true
                 } label: {
                     Image(systemName: "gearshape")
-                        .font(.system(size: 19, weight: .medium))
-                        .frame(width: 44, height: 44)
+                        .font(.system(size: 16, weight: .medium))
+                        .frame(width: 34, height: 34)
                         .background(Color(.systemBackground), in: Circle())
+                        .frame(width: 44, height: 44)
                 }
                 .accessibilityLabel("Настройки")
             }

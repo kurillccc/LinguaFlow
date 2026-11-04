@@ -8,11 +8,12 @@
 import SwiftUI
 
 enum Tab: Int, CaseIterable {
-    case home, lessons, practice, progress, settings
+    case home, achievements, lessons, practice, progress, settings
 
     var title: String {
         switch self {
         case .home: return "Главная"
+        case .achievements: return "Достижения"
         case .lessons: return "Уроки"
         case .practice: return "Практика"
         case .progress: return "Прогресс"
@@ -23,6 +24,7 @@ enum Tab: Int, CaseIterable {
     var icon: String {
         switch self {
         case .home: return "house.fill"
+        case .achievements: return "trophy.fill"
         case .lessons: return "headphones"
         case .practice: return "rectangle.stack.fill"
         case .progress: return "chart.bar.fill"
@@ -32,6 +34,7 @@ enum Tab: Int, CaseIterable {
 
     var color: Color {
         switch self {
+        case .achievements: return Color(red: 0.27, green: 0.65, blue: 0.49)
         case .home: return Color(red: 0.27, green: 0.73, blue: 0.56)
         case .lessons: return Color(red: 0.25, green: 0.56, blue: 0.87)
         case .practice: return Color(red: 0.95, green: 0.55, blue: 0.25)

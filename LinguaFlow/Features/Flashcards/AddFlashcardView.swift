@@ -39,23 +39,27 @@ struct AddFlashcardView: View {
                         .lineLimit(2...4)
                 }
                 Section {
-                    Button {
-                        store.add(word: word, translation: translation, example: example.isEmpty ? nil : example)
-                        dismiss()
-                    } label: {
-                        Text("Сохранить")
-                            .font(.headline)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
+                    HStack {
+                        Spacer()
+                        Button {
+                            store.add(word: word, translation: translation, example: example.isEmpty ? nil : example)
+                            dismiss()
+                        } label: {
+                            Text("Сохранить")
+                                .font(.headline)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(!canSave)
+                        Spacer()
                     }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(!canSave)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
             }
-            .navigationTitle("Новая карточка")
-            .navigationBarTitleDisplayMode(.inline)
+            .scrollDismissesKeyboard(.interactively)
+            .appScreenTitle("Новая карточка")
 
         }
         .tint(accentColor)
