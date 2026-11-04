@@ -11,15 +11,15 @@ struct LessonView: View {
     let lesson: Lesson
     let level: Level
     let onNextLesson: (Lesson) -> Void
-    
+
     @StateObject private var audio = AudioPlayerManager()
     @Environment(\.dismiss) private var dismiss
     @State private var achievementBlockerID = UUID()
     @State private var textScale: CGFloat = 1.0
     @State private var lastPosition: Double = 0
-    
+
     @AppStorage("autoPlayNext") private var autoPlayNext: Bool = true
-    
+
     private var nextLessonComputed: Lesson? {
         guard let currentIndex = level.lessons.firstIndex(where: { $0.id == lesson.id }),
               currentIndex + 1 < level.lessons.count
@@ -27,7 +27,7 @@ struct LessonView: View {
         print("✅ next lesson: \(level.lessons[currentIndex + 1].id)")
         return level.lessons[currentIndex + 1]
     }
-    
+
     private func setupAudio() {
         ProgressManager.shared.rememberLesson(lessonId: lesson.id, levelId: lesson.levelId)
         audio.onProgressUpdate = { time in
@@ -37,7 +37,7 @@ struct LessonView: View {
                 lastPosition: time
             )
         }
-        
+
         audio.onFinish = {
             ProgressManager.shared.save(
                 lessonId: lesson.id,
@@ -52,7 +52,7 @@ struct LessonView: View {
             }
         }
     }
-    
+
     private func loadProgress() {
         let progress = ProgressManager.shared.load(
             levelId: lesson.levelId,
@@ -64,10 +64,10 @@ struct LessonView: View {
             audio.seekTo(lastPosition)
         }
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
-            
+
             // MARK: — Navigation header
             HStack {
                 Button {
@@ -80,19 +80,26 @@ struct LessonView: View {
                         .background(level.color.opacity(0.1))
                         .clipShape(Circle())
                 }
-                
+
                 Spacer()
-                
+
                 VStack(spacing: 2) {
-                    Text(level.icon + " " + level.title)
-                        .font(.system(size: 12))
-                        .foregroundColor(.secondary)
+                    HStack(spacing: 5) {
+                        Image("Level\(level.id)Illustration")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 26, height: 26)
+                            .accessibilityHidden(true)
+                        Text(level.title)
+                            .font(.system(size: 12))
+                            .foregroundColor(.secondary)
+                    }
                     Text("Урок \(lesson.id)")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
                 }
-                
+
                 Spacer()
-                
+
                 Menu {
                     Button("Мелкий") { textScale = 0.85 }
                     Button("Обычный") { textScale = 1.0 }
@@ -109,16 +116,16 @@ struct LessonView: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 12)
             .background(Color(.systemBackground))
-            
+
             Divider()
-            
+
             ScrollView {
-                
+
                 VStack(alignment: .leading, spacing: 16) {
                     Text(lesson.title)
                         .font(.system(size: 22 * textScale, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
-                    
+
                     HStack(spacing: 6) {
                         Image(systemName: "clock")
                             .font(.system(size: 12))
@@ -135,9 +142,9 @@ struct LessonView: View {
                             .font(.system(size: 13))
                             .foregroundColor(level.color)
                     }
-                    
+
                     Divider()
-                    
+
                     ForEach(Array(lesson.text.components(separatedBy: "\n\n").enumerated()), id: \.offset) { _, paragraph in
                         Text((try? AttributedString(markdown: paragraph)) ?? AttributedString(paragraph))
                             .font(.system(size: 16 * textScale))
@@ -151,7 +158,7 @@ struct LessonView: View {
             }
             .id(lesson.id)
             .transition(.opacity)
-            
+
             AudioPlayerView(audio: audio, level: level)
         }
         .background(Color(.systemGroupedBackground))
@@ -178,5 +185,5 @@ struct LessonView: View {
             audio.stop()
         }
     }
-    
+
 }

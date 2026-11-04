@@ -23,7 +23,7 @@ struct LevelsView: View {
                 Image("Level\(level.id)Illustration")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 76, height: 76)
+                    .frame(width: 64, height: 64)
                     .accessibilityHidden(true)
             }
 

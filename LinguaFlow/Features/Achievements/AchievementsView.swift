@@ -236,12 +236,12 @@ private struct AchievementTile: View {
             Text(achievement.definition.name)
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 .multilineTextAlignment(.center)
-                .frame(minHeight: 38)
+                .fixedSize(horizontal: false, vertical: true)
             Text(achievement.definition.condition)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-                .frame(minHeight: 50)
+                .fixedSize(horizontal: false, vertical: true)
             ProgressView(value: achievement.fraction)
                 .tint(Tab.home.color)
             Text(achievement.isEarned ? "Получено" : achievement.progressText)
@@ -317,23 +317,31 @@ struct AchievementCelebrationView: View {
                     ZStack {
                         Circle()
                             .fill(Tab.home.color.opacity(0.12))
-                            .frame(width: 220, height: 220)
+                            .frame(width: 300, height: 300)
                         if reduceMotion {
-                            Image(systemName: "sparkles")
-                                .font(.system(size: 54, weight: .medium))
-                                .foregroundStyle(.orange)
-                                .accessibilityHidden(true)
+                            ZStack {
+                                ForEach(0..<4, id: \.self) { index in
+                                    Image(systemName: index == 2 ? "sparkles" : "sparkle")
+                                        .font(.system(size: index.isMultiple(of: 2) ? 24 : 18, weight: .medium))
+                                        .foregroundStyle(index.isMultiple(of: 2) ? .orange : Tab.home.color)
+                                        .offset(
+                                            x: index < 2 ? (index == 0 ? -116 : 116) : (index == 2 ? -100 : 100),
+                                            y: index < 2 ? -96 : 96
+                                        )
+                                }
+                            }
+                            .accessibilityHidden(true)
                         } else {
                             LottieView(animation: .named("AchievementSparkles"))
                                 .playing(loopMode: .loop)
-                                .frame(width: 280, height: 280)
+                                .frame(width: 320, height: 320)
                                 .accessibilityHidden(true)
                         }
                         Image(achievement.definition.assetName)
                             .resizable()
                             .scaledToFit()
-                            .frame(maxWidth: 280)
-                            .frame(height: 280)
+                            .frame(maxWidth: 220)
+                            .frame(height: 220)
                             .shadow(color: Tab.home.color.opacity(0.2), radius: 20, y: 8)
                     }
                     .scaleEffect(appeared ? 1 : 0.8)
