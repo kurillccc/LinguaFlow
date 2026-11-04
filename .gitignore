@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode user state and build products
+DerivedData/
+build/
+*.xcuserstate
+**/xcuserdata/
+*.xccheckout
+*.moved-aside
+*.hmap
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# SwiftLint cache
+.swiftlint_cache/

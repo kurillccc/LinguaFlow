@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A11F00000000000000000001 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A11F00000000000000000002 /* Lottie */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FCEEC9C62FC81E6300A4B015 /* LinguaFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinguaFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A11F00000000000000000001 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +71,7 @@
 			buildConfigurationList = FCEEC9D62FC81E6500A4B015 /* Build configuration list for PBXNativeTarget "LinguaFlow" */;
 			buildPhases = (
 				FCEEC9C22FC81E6300A4B015 /* Sources */,
+				A11F00000000000000000003 /* SwiftLint */,
 				FCEEC9C32FC81E6300A4B015 /* Frameworks */,
 				FCEEC9C42FC81E6300A4B015 /* Resources */,
 			);
@@ -78,6 +84,7 @@
 			);
 			name = LinguaFlow;
 			packageProductDependencies = (
+				A11F00000000000000000002 /* Lottie */,
 			);
 			productName = LinguaFlow;
 			productReference = FCEEC9C62FC81E6300A4B015 /* LinguaFlow.app */;
@@ -107,6 +114,9 @@
 			);
 			mainGroup = FCEEC9BD2FC81E6300A4B015;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A11F00000000000000000004 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FCEEC9C72FC81E6300A4B015 /* Products */;
 			projectDirPath = "";
@@ -126,6 +136,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A11F00000000000000000003 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/Scripts/swiftlint.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FCEEC9C22FC81E6300A4B015 /* Sources */ = {
@@ -268,6 +300,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LinguaFlow/App/Info.plist;
@@ -313,6 +346,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LinguaFlow/App/Info.plist;
@@ -370,6 +404,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A11F00000000000000000004 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A11F00000000000000000002 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11F00000000000000000004 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FCEEC9BE2FC81E6300A4B015 /* Project object */;
 }

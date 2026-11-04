@@ -6,20 +6,45 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct AchievementsView: View {
     @ObservedObject private var store = AchievementStore.shared
     @State private var selected: AchievementState?
     private var groups: [AchievementGroup] {
-        let definitions: [(String, String, String, String, [String])] = [
-            ("streak", "Серия повторений", "Повторяй слова каждый день", "flame.fill", ["streak"]),
-            ("vocabulary", "Словарный запас", "Добавляй и запоминай новые слова", "character.book.closed.fill", ["vocabulary", "mastery"]),
-            ("lessons", "Обучение", "Проходи уроки и открывай уровни", "headphones", ["lessons"])
+        let definitions = [
+            AchievementGroupDefinition(
+                id: "streak",
+                title: "Серия повторений",
+                subtitle: "Повторяй слова каждый день",
+                icon: "flame.fill",
+                categories: ["streak"]
+            ),
+            AchievementGroupDefinition(
+                id: "vocabulary",
+                title: "Словарный запас",
+                subtitle: "Добавляй и запоминай новые слова",
+                icon: "character.book.closed.fill",
+                categories: ["vocabulary", "mastery"]
+            ),
+            AchievementGroupDefinition(
+                id: "lessons",
+                title: "Обучение",
+                subtitle: "Проходи уроки и открывай уровни",
+                icon: "headphones",
+                categories: ["lessons"]
+            )
         ]
-        return definitions.compactMap { id, title, subtitle, icon, categories in
-            let items = store.achievements.filter { categories.contains($0.definition.category) }
+        return definitions.compactMap { definition in
+            let items = store.achievements.filter { definition.categories.contains($0.definition.category) }
             guard !items.isEmpty else { return nil }
-            return AchievementGroup(id: id, title: title, subtitle: subtitle, icon: icon, achievements: items)
+            return AchievementGroup(
+                id: definition.id,
+                title: definition.title,
+                subtitle: definition.subtitle,
+                icon: definition.icon,
+                achievements: items
+            )
         }
     }
 
@@ -140,6 +165,14 @@ struct AchievementBadge: View {
             }
             .accessibilityHidden(true)
     }
+}
+
+private struct AchievementGroupDefinition {
+    let id: String
+    let title: String
+    let subtitle: String
+    let icon: String
+    let categories: [String]
 }
 
 private struct AchievementGroup: Identifiable {
@@ -285,20 +318,23 @@ struct AchievementCelebrationView: View {
                         Circle()
                             .fill(Tab.home.color.opacity(0.12))
                             .frame(width: 220, height: 220)
+                        if reduceMotion {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 54, weight: .medium))
+                                .foregroundStyle(.orange)
+                                .accessibilityHidden(true)
+                        } else {
+                            LottieView(animation: .named("AchievementSparkles"))
+                                .playing(loopMode: .loop)
+                                .frame(width: 280, height: 280)
+                                .accessibilityHidden(true)
+                        }
                         Image(achievement.definition.assetName)
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: 280)
                             .frame(height: 280)
                             .shadow(color: Tab.home.color.opacity(0.2), radius: 20, y: 8)
-                        Image(systemName: "sparkle")
-                            .font(.system(size: 26))
-                            .foregroundStyle(.orange)
-                            .offset(x: 120, y: -100)
-                        Image(systemName: "sparkle")
-                            .font(.system(size: 18))
-                            .foregroundStyle(Tab.home.color)
-                            .offset(x: -118, y: 85)
                     }
                     .scaleEffect(appeared ? 1 : 0.8)
                     .opacity(appeared ? 1 : 0)
