@@ -12,14 +12,7 @@ private struct AppScreenTitle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .navigationTitle(title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text(title)
-                        .font(.system(.headline, design: .rounded, weight: .bold))
-                        .multilineTextAlignment(.center)
-                }
-            }
+            .navigationBarTitleDisplayMode(.large)
     }
 }
 

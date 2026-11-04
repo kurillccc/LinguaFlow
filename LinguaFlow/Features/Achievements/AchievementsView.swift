@@ -10,7 +10,18 @@ import SwiftUI
 struct AchievementsView: View {
     @ObservedObject private var store = AchievementStore.shared
     @State private var selected: AchievementState?
-    private let columns = [GridItem(.adaptive(minimum: 140), spacing: 12)]
+    private var groups: [AchievementGroup] {
+        let definitions: [(String, String, String, String, [String])] = [
+            ("streak", "Серия повторений", "Повторяй слова каждый день", "flame.fill", ["streak"]),
+            ("vocabulary", "Словарный запас", "Добавляй и запоминай новые слова", "character.book.closed.fill", ["vocabulary", "mastery"]),
+            ("lessons", "Обучение", "Проходи уроки и открывай уровни", "headphones", ["lessons"])
+        ]
+        return definitions.compactMap { id, title, subtitle, icon, categories in
+            let items = store.achievements.filter { categories.contains($0.definition.category) }
+            guard !items.isEmpty else { return nil }
+            return AchievementGroup(id: id, title: title, subtitle: subtitle, icon: icon, achievements: items)
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -18,22 +29,8 @@ struct AchievementsView: View {
                 VStack(spacing: 16) {
                     hero
                     if !store.nextAchievements.isEmpty { upNext }
-                    HStack {
-                        Text("Все достижения")
-                            .font(.headline)
-                        Spacer()
-                        Text("\(store.earnedCount) / \(store.achievements.count)")
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                    }
-                    LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach(store.achievements) { achievement in
-                            Button { selected = achievement } label: {
-                                AchievementTile(achievement: achievement)
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("achievement-" + achievement.id)
-                        }
+                    ForEach(groups) { group in
+                        AchievementSection(group: group) { selected = $0 }
                     }
                 }
                 .padding(16)
@@ -55,24 +52,24 @@ struct AchievementsView: View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 10) {
                 Text("ШАГ ЗА ШАГОМ")
-                    .font(.caption2.weight(.bold))
+                    .font(.caption.weight(.bold))
                     .foregroundStyle(Tab.home.color)
                 Text(store.earnedCount == store.achievements.count && store.earnedCount > 0
                      ? "Все награды ваши!" : "Вы отлично идёте!")
-                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .font(.system(.title2, design: .rounded, weight: .bold))
                 Text("Маленькие шаги. Большой прогресс.")
-                    .font(.footnote)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                 ProgressView(value: Double(store.earnedCount), total: Double(max(store.achievements.count, 1)))
                     .tint(Tab.home.color)
                 Text("Открыто: \(store.earnedCount) из \(store.achievements.count)")
-                    .font(.caption.weight(.semibold))
+                    .font(.subheadline.weight(.semibold))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             Image("achievement-all-lessons-complete")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 100, height: 120)
+                .frame(width: 112, height: 128)
                 .accessibilityHidden(true)
         }
         .padding(18)
@@ -84,7 +81,7 @@ struct AchievementsView: View {
     private var upNext: some View {
         VStack(alignment: .leading, spacing: 12) {
             Label("Следующие награды", systemImage: "star.fill")
-                .font(.subheadline.weight(.semibold))
+                .font(.headline)
                 .foregroundStyle(Tab.home.color)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
@@ -94,16 +91,16 @@ struct AchievementsView: View {
                                 AchievementBadge(achievement: achievement, size: 48)
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(achievement.definition.name)
-                                        .font(.caption.weight(.semibold))
+                                        .font(.subheadline.weight(.semibold))
                                         .lineLimit(2)
                                     Text(achievement.progressText)
-                                        .font(.caption2)
+                                        .font(.footnote)
                                         .foregroundStyle(.secondary)
                                     ProgressView(value: achievement.fraction)
                                         .tint(Tab.home.color)
                                 }
                             }
-                            .frame(width: 190, alignment: .leading)
+                            .frame(width: 220, alignment: .leading)
                             .padding(10)
                             .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16))
                         }
@@ -138,30 +135,82 @@ struct AchievementBadge: View {
     }
 }
 
+private struct AchievementGroup: Identifiable {
+    let id: String
+    let title: String
+    let subtitle: String
+    let icon: String
+    let achievements: [AchievementState]
+}
+
+private struct AchievementSection: View {
+    let group: AchievementGroup
+    let select: (AchievementState) -> Void
+
+    private var earnedCount: Int { group.achievements.filter(\.isEarned).count }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 12) {
+                Image(systemName: group.icon)
+                    .font(.system(size: 21, weight: .semibold))
+                    .foregroundStyle(Tab.home.color)
+                    .frame(width: 44, height: 44)
+                    .background(Tab.home.color.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(group.title)
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                    Text(group.subtitle)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 4)
+                Text("\(earnedCount)/\(group.achievements.count)")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .top, spacing: 12) {
+                    ForEach(group.achievements) { achievement in
+                        Button { select(achievement) } label: {
+                            AchievementTile(achievement: achievement)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("achievement-" + achievement.id)
+                    }
+                }
+            }
+            .contentMargins(.trailing, 2)
+        }
+        .padding(16)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 24))
+    }
+}
+
 private struct AchievementTile: View {
     let achievement: AchievementState
 
     var body: some View {
         VStack(spacing: 10) {
-            AchievementBadge(achievement: achievement, size: 88)
+            AchievementBadge(achievement: achievement, size: 96)
             Text(achievement.definition.name)
-                .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                .font(.system(.headline, design: .rounded, weight: .semibold))
                 .multilineTextAlignment(.center)
-                .frame(minHeight: 38)
+                .frame(minHeight: 42)
             Text(achievement.definition.condition)
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-                .frame(minHeight: 48)
+                .frame(minHeight: 62)
             ProgressView(value: achievement.fraction)
                 .tint(Tab.home.color)
             Text(achievement.isEarned ? "Получено" : achievement.progressText)
-                .font(.caption2.weight(.semibold))
+                .font(.footnote.weight(.semibold))
                 .foregroundStyle(achievement.isEarned ? Tab.home.color : Color.secondary)
         }
         .padding(14)
-        .frame(maxWidth: .infinity)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 22))
+        .frame(width: 168)
+        .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20))
         .accessibilityElement(children: .combine)
     }
 }

@@ -81,11 +81,11 @@ struct HomeView: View {
                             .foregroundStyle(Tab.home.color)
                     }
                     Spacer()
-                    Image(systemName: "flame.fill")
-                        .font(.system(size: 48))
-                        .foregroundStyle(.orange.gradient)
-                        .rotationEffect(.degrees(10))
-                        .padding(.top, 16)
+                    Image("StreakMascot")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 76, height: 92)
+                        .padding(.top, 8)
                         .accessibilityHidden(true)
                 }
                 Text(cards.cards.isEmpty
@@ -93,7 +93,7 @@ struct HomeView: View {
                      : history.reviewed(on: context.date)
                         ? "Сегодня вы уже повторяли слова. Так держать!"
                         : "Несколько минут практики — ещё один день в серии")
-                    .font(.footnote)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                 HStack(spacing: 6) {
                     ForEach(0..<7) { offset in
@@ -168,16 +168,16 @@ struct HomeView: View {
                             .foregroundStyle(Tab.lessons.color)
                     }
                     Text(progress.lastLessonId == 0 ? "Начнём учиться?" : "Продолжим обучение")
-                        .font(.system(.title3, design: .rounded, weight: .bold))
+                    .font(.system(.title2, design: .rounded, weight: .bold))
                     Text("\(target.level.title) · Урок \(target.lesson.id)")
-                        .font(.footnote.weight(.semibold))
+                    .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Tab.lessons.color)
                     Text(target.lesson.title)
-                        .font(.footnote)
+                    .font(.subheadline)
                     ProgressView(value: Double(completed), total: Double(max(target.level.lessons.count, 1)))
                         .tint(Tab.lessons.color)
                     Text("Завершено уроков: \(completed) из \(target.level.lessons.count)")
-                        .font(.caption)
+                    .font(.footnote)
                         .foregroundStyle(.secondary)
                     Text(progress.lastLessonId == 0 ? "Начать курс" : "Продолжить")
                     .padding(.horizontal, 28)
