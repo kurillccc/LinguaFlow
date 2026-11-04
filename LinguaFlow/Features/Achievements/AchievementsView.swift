@@ -39,7 +39,14 @@ struct AchievementsView: View {
                 .frame(maxWidth: .infinity)
             }
             .background(Color(.systemGroupedBackground))
-            .appScreenTitle("Достижения")
+            .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                AppTabHeader("Достижения")
+                    .padding(.horizontal, 20)
+                    .padding(.top, 30)
+                    .padding(.bottom, 12)
+                    .background(Color(.systemGroupedBackground))
+            }
             .sheet(item: $selected) { achievement in
                 AchievementDetailView(achievement: achievement)
                     .presentationDragIndicator(.visible)

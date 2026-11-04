@@ -196,7 +196,7 @@ struct SettingsView: View {
             }
         }
         .appScreenTitle("Настройки")
-        .appBackButton()
+        .appBackButton(color: accentColor)
         .toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
         .alert("Сбросить прогресс?", isPresented: $showResetAlert) {

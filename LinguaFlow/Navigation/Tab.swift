@@ -34,7 +34,7 @@ enum Tab: Int, CaseIterable {
 
     var color: Color {
         switch self {
-        case .achievements: return Color(red: 0.27, green: 0.65, blue: 0.49)
+        case .achievements: return Color(red: 0.91, green: 0.62, blue: 0.16)
         case .home: return Color(red: 0.27, green: 0.73, blue: 0.56)
         case .lessons: return Color(red: 0.25, green: 0.56, blue: 0.87)
         case .practice: return Color(red: 0.95, green: 0.55, blue: 0.25)

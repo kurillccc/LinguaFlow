@@ -28,7 +28,14 @@ struct LevelsTabView: View {
                 }
                 .padding(16)
             }
-            .appScreenTitle("Уроки")
+            .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                AppTabHeader("Уроки")
+                    .padding(.horizontal, 20)
+                    .padding(.top, 30)
+                    .padding(.bottom, 12)
+                    .background(Color(.systemGroupedBackground))
+            }
         }
     }
     

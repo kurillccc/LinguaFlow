@@ -8,6 +8,7 @@
 import SwiftUI
 
 private struct AppBackButton: ViewModifier {
+    let color: Color?
     @Environment(\.dismiss) private var dismiss
 
     func body(content: Content) -> some View {
@@ -19,6 +20,7 @@ private struct AppBackButton: ViewModifier {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 17, weight: .semibold))
                     }
+                    .tint(color)
                     .accessibilityLabel("Назад")
                 }
             }
@@ -26,5 +28,7 @@ private struct AppBackButton: ViewModifier {
 }
 
 extension View {
-    func appBackButton() -> some View { modifier(AppBackButton()) }
+    func appBackButton(color: Color? = nil) -> some View {
+        modifier(AppBackButton(color: color))
+    }
 }

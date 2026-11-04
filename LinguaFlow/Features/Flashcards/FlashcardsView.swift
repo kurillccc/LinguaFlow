@@ -52,17 +52,21 @@ struct FlashcardsView: View {
                     }
                 }
             }
-            .appScreenTitle("Карточки")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+            .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                AppTabHeader(title: "Практика") {
                     Button {
                         showAddSheet = true
                     } label: {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 24, weight: .semibold))
                     }
                     .accessibilityLabel("Добавить слово")
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 30)
+                .padding(.bottom, 12)
+                .background(Color(.systemGroupedBackground))
             }
             .sheet(isPresented: $showAddSheet) {
                 AddFlashcardView()
