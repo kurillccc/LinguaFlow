@@ -71,7 +71,6 @@
 			buildConfigurationList = FCEEC9D62FC81E6500A4B015 /* Build configuration list for PBXNativeTarget "LinguaFlow" */;
 			buildPhases = (
 				FCEEC9C22FC81E6300A4B015 /* Sources */,
-				A11F00000000000000000003 /* SwiftLint */,
 				FCEEC9C32FC81E6300A4B015 /* Frameworks */,
 				FCEEC9C42FC81E6300A4B015 /* Resources */,
 			);
@@ -136,28 +135,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A11F00000000000000000003 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			alwaysOutOfDate = 1;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/Scripts/swiftlint.sh\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FCEEC9C22FC81E6300A4B015 /* Sources */ = {

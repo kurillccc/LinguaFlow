@@ -5,7 +5,6 @@ excluded:
   - LinguaFlow/Assets.xcassets
   - LinguaFlow/Resources
   - LinguaFlow.xcodeproj
-  - Tests
 
 line_length:
   warning: 140
