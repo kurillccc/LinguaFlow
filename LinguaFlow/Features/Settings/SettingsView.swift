@@ -13,14 +13,11 @@ struct SettingsView: View {
     @AppStorage("selectedTheme")      private var selectedTheme: String = "system"
     @AppStorage("playbackSpeed")      private var playbackSpeed: Double = 1.0
     @AppStorage("autoPlayNext")       private var autoPlayNext: Bool = true
-    @AppStorage("showTranscript")     private var showTranscript: Bool = true
     @AppStorage("dailyReminderOn")    private var dailyReminderOn: Bool = false
     @AppStorage("reminderHour")       private var reminderHour: Int = 9
     @AppStorage("textSize")          private var textSize: String = "medium"
 
     @State private var showResetAlert = false
-    @State private var showAbout = false
-
     let accentColor = Color(red: 0.72, green: 0.37, blue: 0.95)
 
     var body: some View {
@@ -30,32 +27,31 @@ struct SettingsView: View {
             ScrollView {
                 VStack(spacing: 24) {
 
-                    // MARK: — Profile placeholder
-                    VStack(spacing: 12) {
-                        ZStack {
-                            Circle()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [accentColor, Color(red: 0.25, green: 0.56, blue: 0.87)],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .frame(width: 72, height: 72)
-                            Text("К")
-                                .font(.system(size: 30, weight: .bold))
-                                .foregroundColor(.white)
+                    HStack(spacing: 14) {
+                        Image(systemName: "slider.horizontal.3")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .frame(width: 48, height: 48)
+                            .background(
+                                LinearGradient(
+                                    colors: [accentColor, Color(red: 0.25, green: 0.56, blue: 0.87)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                in: RoundedRectangle(cornerRadius: 15, style: .continuous)
+                            )
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Учись в своём ритме")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                            Text("Настрой тему, аудио и напоминания")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
-                        VStack(spacing: 4) {
-                            Text("Кирилл")
-                                .font(.system(size: 18, weight: .bold, design: .rounded))
-                            Text("Авторизация появится позже")
-                                .font(.system(size: 13))
-                                .foregroundColor(.secondary)
-                        }
+                        Spacer(minLength: 0)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(16)
                     .background(settingsCard)
                     .padding(.horizontal, 20)
 
@@ -115,8 +111,6 @@ struct SettingsView: View {
                                 color: Color(red: 0.25, green: 0.56, blue: 0.87),
                                 isOn: $autoPlayNext
                             )
-
-                            Divider().padding(.leading, 16)
 
                             Divider().padding(.leading, 16)
 
