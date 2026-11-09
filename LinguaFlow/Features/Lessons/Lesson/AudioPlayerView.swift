@@ -35,7 +35,7 @@ struct AudioPlayerView: View {
                         }
                     )
                     .tint(level.color)
-                    .tint(level.color)
+                    .disabled(!audio.hasAudio)
  
                     HStack {
                         Text(formatTime(audio.currentTime))
@@ -47,16 +47,24 @@ struct AudioPlayerView: View {
                             .foregroundColor(.secondary)
                     }
                 }
+
+                if !audio.hasAudio {
+                    Text("Аудио для урока недоступно")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
  
                 // Кнопки управления
                 HStack(spacing: 0) {
  
                     // Скорость
                     Menu {
+                        Button("0.5x") { audio.setRate(0.5) }
                         Button("0.75x") { audio.setRate(0.75) }
                         Button("1.0x")  { audio.setRate(1.0) }
                         Button("1.25x") { audio.setRate(1.25) }
                         Button("1.5x")  { audio.setRate(1.5) }
+                        Button("1.75x") { audio.setRate(1.75) }
                         Button("2.0x")  { audio.setRate(2.0) }
                     } label: {
                         Text(speedLabel(audio.playbackRate))
@@ -67,6 +75,7 @@ struct AudioPlayerView: View {
                             .clipShape(Capsule())
                     }
                     .frame(maxWidth: .infinity)
+                    .disabled(!audio.hasAudio)
  
                     // -10 сек
                     Button {
@@ -77,6 +86,7 @@ struct AudioPlayerView: View {
                             .foregroundColor(.primary)
                     }
                     .frame(maxWidth: .infinity)
+                    .disabled(!audio.hasAudio)
  
                     // Play / Pause
                     Button {
@@ -94,6 +104,7 @@ struct AudioPlayerView: View {
                         }
                     }
                     .frame(maxWidth: .infinity)
+                    .disabled(!audio.hasAudio)
  
                     // +10 сек
                     Button {
@@ -104,15 +115,7 @@ struct AudioPlayerView: View {
                             .foregroundColor(.primary)
                     }
                     .frame(maxWidth: .infinity)
- 
-                    Button {
-                        // TODO: закладка
-                    } label: {
-                        Image(systemName: "bookmark")
-                            .font(.system(size: 20))
-                            .foregroundColor(.secondary)
-                    }
-                    .frame(maxWidth: .infinity)
+                    .disabled(!audio.hasAudio)
                 }
             }
             .padding(.horizontal, 20)
@@ -127,13 +130,7 @@ struct AudioPlayerView: View {
     }
  
     private func speedLabel(_ rate: Float) -> String {
-        switch rate {
-        case 0.75: return "0.75x"
-        case 1.25: return "1.25x"
-        case 1.5:  return "1.5x"
-        case 2.0:  return "2.0x"
-        default:   return "1.0x"
-        }
+        rate == rate.rounded() ? "\(Int(rate)).0x" : "\(rate)x"
     }
     
 }

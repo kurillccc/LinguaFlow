@@ -12,7 +12,6 @@ struct LessonPlayerScreen: View {
     let level: Level
     
     @State private var currentLesson: Lesson
-    @State private var lastPosition: Double = 0
     
     init(level: Level, lesson: Lesson) {
         self.level = level
@@ -28,14 +27,5 @@ struct LessonPlayerScreen: View {
                 currentLesson = nextLesson
             }
         }
-        .onAppear {
-            loadProgress()
-        }
     }
-    
-    private func loadProgress() {
-        let progress = ProgressManager.shared.load(levelId: currentLesson.levelId,lessonId: currentLesson.id)
-        lastPosition = progress?.lastPosition ?? 0
-    }
-    
 }

@@ -21,11 +21,17 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var currentTime: Double = 0
     @Published var duration: Double = 1
     @Published var playbackRate: Float = 1.0
+    @Published private(set) var hasAudio = false
     
     private var timer: Timer?
     
     func load(lessonId: Int, levelId: Int, fileExtension: String = "mp3") {
         didFinish = false
+        isPlaying = false
+        currentTime = 0
+        hasAudio = false
+        let savedRate = Float(UserDefaults.standard.object(forKey: "playbackSpeed") as? Double ?? 1.0)
+        playbackRate = min(max(savedRate, 0.5), 2.0)
         do {
             try AVAudioSession.sharedInstance().setCategory(
                 .playback,
@@ -38,28 +44,44 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
         
         let fileName = "\(lessonId)"
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
+        let levelDirectory = "Audio/Level\(levelId)"
+        let directories: [String?] = [nil, levelDirectory, "Resources/\(levelDirectory)", "Level\(levelId)"]
+        guard let url = directories.lazy.compactMap({ directory in
+            Bundle.main.url(forResource: fileName, withExtension: fileExtension, subdirectory: directory)
+        }).first else {
             duration = 180
             return
         }
-        
+
         player = try? AVAudioPlayer(contentsOf: url)
-        player?.delegate = self
-        player?.enableRate = true
-        player?.prepareToPlay()
-        duration = player?.duration ?? 1
+        guard let player else {
+            duration = 180
+            return
+        }
+        player.delegate = self
+        player.enableRate = true
+        player.rate = playbackRate
+        hasAudio = player.prepareToPlay()
+        duration = player.duration
     }
     
     func togglePlay() {
         if isPlaying {
             player?.pause()
             stopTimer()
+            isPlaying = false
         } else {
-            player?.rate = playbackRate
-            player?.play()
+            guard let player, hasAudio else { return }
+            if didFinish || currentTime >= duration - 0.1 {
+                player.currentTime = 0
+                currentTime = 0
+                didFinish = false
+            }
+            player.rate = playbackRate
+            guard player.play() else { return }
             startTimer()
+            isPlaying = true
         }
-        isPlaying.toggle()
     }
     
     func seek(by seconds: Double) {
@@ -73,33 +95,29 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
                 stopTimer()
                 isPlaying = false
             }
-            onFinish?()
+            if !didFinish {
+                didFinish = true
+                onFinish?()
+            }
             return
         }
-        
+
+        didFinish = false
         player?.currentTime = newTime
         currentTime = newTime
     }
     
     func seekTo(_ time: Double) {
-        let clampedTime = min(time, duration)
+        let clampedTime = max(0, min(time, duration))
+        didFinish = false
         player?.currentTime = clampedTime
         currentTime = clampedTime
-        
-        if clampedTime >= duration - 2.0 {
-            guard !didFinish else { return }
-            didFinish = true
-            if isPlaying {
-                player?.pause()
-                stopTimer()
-                isPlaying = false
-            }
-            onFinish?()
-        }
     }
     
     func setRate(_ rate: Float) {
+        guard (0.5...2.0).contains(rate) else { return }
         playbackRate = rate
+        UserDefaults.standard.set(Double(rate), forKey: "playbackSpeed")
         if isPlaying {
             player?.rate = rate
         }
@@ -133,18 +151,14 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             self.didFinish = true
             self.isPlaying = false
             self.stopTimer()
-            self.onFinish?()
+            if flag { self.onFinish?() }
         }
-    }
-    
-    func seekToStart(_ time: Double) {
-        player?.currentTime = time
-        currentTime = time
     }
     
     func scrubTo(_ time: Double) {
         isScrubbing = true
         let clampedTime = min(time, duration)
+        if clampedTime < duration - 2.0 { didFinish = false }
         player?.currentTime = clampedTime
         currentTime = clampedTime
     }
@@ -161,6 +175,8 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
                 isPlaying = false
             }
             onFinish?()
+        } else {
+            didFinish = false
         }
     }
     

@@ -15,10 +15,18 @@ struct LessonView: View {
     @StateObject private var audio = AudioPlayerManager()
     @Environment(\.dismiss) private var dismiss
     @State private var achievementBlockerID = UUID()
-    @State private var textScale: CGFloat = 1.0
     @State private var lastPosition: Double = 0
 
     @AppStorage("autoPlayNext") private var autoPlayNext: Bool = true
+    @AppStorage("textSize") private var textSize: String = "medium"
+
+    private var textScale: CGFloat {
+        switch textSize {
+        case "small": 0.85
+        case "large": 1.2
+        default: 1.0
+        }
+    }
 
     private var nextLessonComputed: Lesson? {
         guard let currentIndex = level.lessons.firstIndex(where: { $0.id == lesson.id }),
@@ -60,9 +68,7 @@ struct LessonView: View {
         )
         lastPosition = progress?.lastPosition ?? 0
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            audio.seekTo(lastPosition)
-        }
+        audio.seekTo(lastPosition)
     }
 
     var body: some View {
@@ -94,9 +100,9 @@ struct LessonView: View {
                 Spacer()
 
                 Menu {
-                    Button("Мелкий") { textScale = 0.85 }
-                    Button("Обычный") { textScale = 1.0 }
-                    Button("Крупный") { textScale = 1.2 }
+                    Button("Мелкий") { textSize = "small" }
+                    Button("Обычный") { textSize = "medium" }
+                    Button("Крупный") { textSize = "large" }
                 } label: {
                     Image(systemName: "textformat.size")
                         .font(.system(size: 17))
