@@ -158,7 +158,7 @@ struct LessonView: View {
             .id(lesson.id)
             .transition(.opacity)
 
-            AudioPlayerView(audio: audio, level: level)
+            AudioPlayerView(audio: audio, level: level, lesson: lesson)
         }
         .background(Color(.systemGroupedBackground))
         .navigationBarHidden(true)

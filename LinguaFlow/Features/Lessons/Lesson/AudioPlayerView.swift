@@ -12,6 +12,8 @@ struct AudioPlayerView: View {
     
     @ObservedObject var audio: AudioPlayerManager
     let level: Level
+    let lesson: Lesson
+    @StateObject private var favorites = FavoriteLessonsStore.shared
  
     var body: some View {
         VStack(spacing: 0) {
@@ -116,6 +118,21 @@ struct AudioPlayerView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .disabled(!audio.hasAudio)
+
+                    // Закладка урока
+                    Button {
+                        favorites.toggle(lesson)
+                    } label: {
+                        Image(systemName: favorites.isFavorite(lesson) ? "bookmark.fill" : "bookmark")
+                            .font(.system(size: 21, weight: .medium))
+                            .foregroundStyle(favorites.isFavorite(lesson) ? level.color : .secondary)
+                            .frame(width: 40, height: 40)
+                            .contentShape(Rectangle())
+                    }
+                    .frame(maxWidth: .infinity)
+                    .accessibilityLabel(
+                        favorites.isFavorite(lesson) ? "Убрать из избранного" : "Добавить в избранное"
+                    )
                 }
             }
             .padding(.horizontal, 20)
