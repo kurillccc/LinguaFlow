@@ -45,6 +45,13 @@ final class VocabularyHistory: ObservableObject {
         if addedWords.count + masteredCardIDs.count != before { persist() }
     }
 
+    func resetMasteredProgress() {
+        guard !masteredCardIDs.isEmpty else { return }
+        masteredCardIDs = []
+        defaults.set([], forKey: "achievements.masteredCards")
+        revision += 1
+    }
+
     private func persist() {
         defaults.set(Array(addedWords), forKey: "achievements.addedWords")
         defaults.set(Array(masteredCardIDs), forKey: "achievements.masteredCards")

@@ -79,6 +79,27 @@ final class FlashcardStore: ObservableObject {
         }
     }
 
+    func resetLearningProgress() {
+        guard let context else { return }
+
+        context.perform {
+            let request = FlashcardEntity.fetchRequest()
+            guard let entities = try? context.fetch(request) else { return }
+
+            entities.forEach {
+                $0.box = 0
+                $0.lastReviewedAt = nil
+            }
+
+            do {
+                try context.save()
+                self.loadAll()
+            } catch {
+                context.rollback()
+            }
+        }
+    }
+
     /// Обновляет "коробку" карточки после сессии повторения:
     /// правильный ответ продвигает её к статусу "выучено", неправильный — сбрасывает.
     func markReviewed(_ card: Flashcard, knew: Bool) {

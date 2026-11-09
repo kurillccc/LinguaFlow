@@ -30,6 +30,11 @@ final class ReviewHistory: ObservableObject {
         defaults.set(Array(days), forKey: key)
     }
 
+    func reset() {
+        days = []
+        defaults.removeObject(forKey: key)
+    }
+
     func reviewed(on date: Date, calendar: Calendar = .current) -> Bool {
         days.contains(dayKey(date, calendar: calendar))
     }

@@ -18,6 +18,7 @@ struct SettingsView: View {
     @AppStorage("textSize")          private var textSize: String = "medium"
 
     @State private var showResetAlert = false
+    @State private var reminderUnavailable = false
     let accentColor = Color(red: 0.72, green: 0.37, blue: 0.95)
 
     var body: some View {
@@ -140,6 +141,16 @@ struct SettingsView: View {
                                 isOn: $dailyReminderOn
                             )
 
+                            if reminderUnavailable {
+                                Label("Разрешите уведомления в настройках iPhone, чтобы включить напоминание.",
+                                      systemImage: "exclamationmark.circle")
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 16)
+                                    .padding(.bottom, 12)
+                            }
+
                             if dailyReminderOn {
                                 Divider().padding(.leading, 16)
                                 HStack {
@@ -199,7 +210,18 @@ struct SettingsView: View {
             }
             Button("Отмена", role: .cancel) {}
         } message: {
-            Text("Весь прогресс по урокам и карточкам будет удалён. Это действие нельзя отменить.")
+            Text("Сбросится прогресс уроков, выученность карточек и серия повторений. Слова и полученные достижения останутся.")
+        }
+        .onChange(of: dailyReminderOn) { _, enabled in
+            updateReminder(enabled: enabled, hour: reminderHour)
+        }
+        .onChange(of: reminderHour) { _, hour in
+            guard dailyReminderOn else { return }
+            updateReminder(enabled: true, hour: hour)
+        }
+        .onAppear {
+            guard dailyReminderOn else { return }
+            updateReminder(enabled: true, hour: reminderHour)
         }
     }
 
@@ -216,8 +238,20 @@ struct SettingsView: View {
     }
 
     private func resetProgress() {
-        // TODO: очистить SwiftData / UserDefaults прогресс
-        print("🔄 Прогресс сброшен")
+        ProgressManager.shared.resetLessonProgress()
+        FlashcardStore.shared.resetLearningProgress()
+        ReviewHistory.shared.reset()
+        VocabularyHistory.shared.resetMasteredProgress()
+    }
+
+    private func updateReminder(enabled: Bool, hour: Int) {
+        DailyReminderNotifications.shared.update(enabled: enabled, hour: hour) { succeeded in
+            guard enabled else { return }
+            DispatchQueue.main.async {
+                reminderUnavailable = !succeeded
+                if !succeeded { dailyReminderOn = false }
+            }
+        }
     }
 }
 

@@ -25,6 +25,31 @@ final class ProgressManager: ObservableObject {
         UserDefaults.standard.set(levelId, forKey: "lastLevelId")
     }
 
+    func resetLessonProgress() {
+        guard let context else { return }
+
+        context.perform {
+            let request = LessonProgressEntity.fetchRequest()
+            guard let records = try? context.fetch(request) else { return }
+            records.forEach(context.delete)
+
+            do {
+                try context.save()
+            } catch {
+                context.rollback()
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.progressCache = [:]
+                self.lastLessonId = 0
+                self.lastLevelId = 0
+                UserDefaults.standard.removeObject(forKey: "lastLessonId")
+                UserDefaults.standard.removeObject(forKey: "lastLevelId")
+            }
+        }
+    }
+
     private var context: NSManagedObjectContext?
     
     func savePosition(lessonId: Int, levelId: Int, lastPosition: Double) {
