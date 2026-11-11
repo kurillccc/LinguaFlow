@@ -28,34 +28,6 @@ struct SettingsView: View {
             ScrollView {
                 VStack(spacing: 24) {
 
-                    HStack(spacing: 14) {
-                        Image(systemName: "slider.horizontal.3")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(.white)
-                            .frame(width: 48, height: 48)
-                            .background(
-                                LinearGradient(
-                                    colors: [accentColor, Color(red: 0.25, green: 0.56, blue: 0.87)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                in: RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            )
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Учись в своём ритме")
-                                .font(.system(.headline, design: .rounded, weight: .bold))
-                            Text("Настрой тему, аудио и напоминания")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        Spacer(minLength: 0)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(16)
-                    .background(settingsCard)
-                    .padding(.horizontal, 20)
-
                     // MARK: — Внешний вид
                     SettingsSection(title: "Внешний вид", icon: "paintbrush.fill", color: accentColor) {
                         VStack(spacing: 0) {
@@ -226,12 +198,6 @@ struct SettingsView: View {
     }
 
     // MARK: - Helpers
-
-    private var settingsCard: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(Color(.systemBackground))
-            .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 3)
-    }
 
     private func speedLabel(_ speed: Double) -> String {
         speed == speed.rounded() ? "\(Int(speed)).0x" : "\(speed)x"
