@@ -6,29 +6,43 @@ LinguaFlow — приложение для изучения английског
 
 ## Скриншоты и демо-видео
 
-Снимки экранов и демо-видео будут добавлены после запуска приложения в iOS Simulator.
+Скриншоты основных экранов приложения в светлой и тёмной темах.
 
 ### Скриншоты
 
-#### Главная
+#### Светлая тема
 
-<!-- ![Главный экран](Screenshots/home.png) -->
+<div style="display: flex; gap: 10px;">
+    <img width="150" alt="Главный экран — светлая тема" src="Screenshots/light-home.png" />
+    <img width="150" alt="Уровни курса — светлая тема" src="Screenshots/light-lessons.png" />
+    <img width="150" alt="Уроки уровня — светлая тема" src="Screenshots/light-level-lessons.png" />
+    <img width="150" alt="Аудиоурок — светлая тема" src="Screenshots/light-lesson-player.png" />
+</div>
 
-#### Получение достижения
+<div style="display: flex; gap: 10px;">
+    <img width="150" alt="Достижения — светлая тема" src="Screenshots/light-achievements.png" />
+    <img width="150" alt="Практика и карточки слов — светлая тема" src="Screenshots/light-practice.png" />
+    <img width="150" alt="Настройки — светлая тема" src="Screenshots/light-settings.png" />
+</div>
 
-<!-- ![Получение достижения](Screenshots/achievement-unlocked.png) -->
+#### Тёмная тема
 
-#### Уроки
+<div style="display: flex; gap: 10px;">
+    <img width="150" alt="Главный экран — тёмная тема" src="Screenshots/dark-home.png" />
+    <img width="150" alt="Уровни курса — тёмная тема" src="Screenshots/dark-lessons.png" />
+    <img width="150" alt="Уроки уровня — тёмная тема" src="Screenshots/dark-level-lessons.png" />
+    <img width="150" alt="Аудиоурок — тёмная тема" src="Screenshots/dark-lesson-player.png" />
+</div>
 
-<!-- ![Список уроков](Screenshots/lessons.png) -->
-
-#### Практика
-
-<!-- ![Экран практики](Screenshots/practice.png) -->
+<div style="display: flex; gap: 10px;">
+    <img width="150" alt="Достижения — тёмная тема" src="Screenshots/dark-achievements.png" />
+    <img width="150" alt="Практика и карточки слов — тёмная тема" src="Screenshots/dark-practice.png" />
+    <img width="150" alt="Настройки — тёмная тема" src="Screenshots/dark-settings.png" />
+</div>
 
 ### Демо-видео
 
-<!-- [Посмотреть демонстрацию](Screenshots/linguaflow-demo.mp4) -->
+Демо-видео будет добавлено позже.
 
 ## Стек
 
