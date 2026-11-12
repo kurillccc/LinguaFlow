@@ -21,6 +21,7 @@ LinguaFlow — приложение для изучения английског
 
 <div style="display: flex; gap: 10px;">
     <img width="150" alt="Достижения — светлая тема" src="Screenshots/light-achievements.png" />
+    <img width="150" alt="Открытие достижения — светлая тема" src="Screenshots/light-achievement-unlocked.png" />
     <img width="150" alt="Практика и карточки слов — светлая тема" src="Screenshots/light-practice.png" />
     <img width="150" alt="Настройки — светлая тема" src="Screenshots/light-settings.png" />
 </div>
@@ -36,13 +37,14 @@ LinguaFlow — приложение для изучения английског
 
 <div style="display: flex; gap: 10px;">
     <img width="150" alt="Достижения — тёмная тема" src="Screenshots/dark-achievements.png" />
+    <img width="150" alt="Открытие достижения — тёмная тема" src="Screenshots/dark-achievement-unlocked.png" />
     <img width="150" alt="Практика и карточки слов — тёмная тема" src="Screenshots/dark-practice.png" />
     <img width="150" alt="Настройки — тёмная тема" src="Screenshots/dark-settings.png" />
 </div>
 
 ### Демо-видео
 
-Демо-видео будет добавлено позже.
+<img width="210" alt="Демонстрация LinguaFlow" src="docs/video/demo.gif" />
 
 ## Стек
 
